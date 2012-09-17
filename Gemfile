@@ -7,10 +7,14 @@ gem 'rails', '3.2.8'
 
 gem 'thin'
 gem 'devise'
+gem 'oauth2' 
+gem 'nifty-generators' #Just to create a basic layout
+gem "omniauth"
 
 group :development do 
   gem 'mysql2'
 end
+
 
 group :production do 
   gem 'pg'
