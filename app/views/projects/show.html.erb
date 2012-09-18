@@ -1,0 +1,16 @@
+<% title "Project" %>
+
+<p>
+  <strong>Name:</strong>
+  <%= @project.name %>
+</p>
+<p>
+  <strong>Account:</strong>
+  <%= @project.account_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_account_project_path(@account, @project) %> |
+  <%= link_to "Destroy", account_project_path(@project), :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", account_projects_path(@account) %>
+</p>

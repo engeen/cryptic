@@ -10,6 +10,11 @@
     <%= yield(:head) %>
   </head>
   <body>
+    <div id="head"><%= current_user.email if signed_in? %>
+      <%= link_to "Выйти", destroy_user_session_path, :method => :delete if signed_in? %>
+      <%= link_to "Войти", new_user_session_path unless  signed_in? %>
+
+      </div>
     <div id="container">
       <% flash.each do |name, msg| %>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>

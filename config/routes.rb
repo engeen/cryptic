@@ -1,4 +1,8 @@
 Ccrm::Application.routes.draw do
+  resources :accounts do
+    resources :projects
+  end
+
   ActiveAdmin.routes(self)
 
   devise_for :admin_users, ActiveAdmin::Devise.config
