@@ -1,0 +1,9 @@
+<p>Добрый день!</p>
+
+<p>Пожалуйста, подтвердите вашу регистрацию через email по ссылке:</p>
+
+<p><%= link_to 'Подтвердить регистрацию', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+
+<p>Ваш Email адрес:  <%= @resource.email %> был указан в качестве регистрационных данных на
+  сайте http://cryptic-crm.heroku.com. Если Вы не регистрировались, просто удалите это письмо или
+  познакомьтесь с нами <%= link_to "поближе", "http://clever-crm.heroku.com"%>.</p>
