@@ -15,7 +15,7 @@ Ccrm::Application.configure do
   config.assets.compress = true
 
   #devise
-  config.action_mailer.default_url_options = { :host => 'cryptic-crm.herokuapp.com/' }
+  config.action_mailer.default_url_options = { :host => 'cryptic-crm.herokuapp.com' }
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
@@ -53,7 +53,19 @@ Ccrm::Application.configure do
   config.assets.precompile += %w[active_admin.css active_admin.js]
 
   # Disable delivery errors, bad email addresses will be ignored
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
+
+
+  config.action_mailer.smtp_settings = {
+    :port           => ENV['MAILGUN_SMTP_PORT'], 
+    :address        => ENV['MAILGUN_SMTP_SERVER'],
+    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+    :domain         => 'cryptic-crm.herokuapp.com',
+    :authentication => :plain,
+  }
+  config.action_mailer.delivery_method = :smtp
+
 
   # Enable threaded mode
   # config.threadsafe!
