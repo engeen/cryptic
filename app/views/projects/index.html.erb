@@ -4,11 +4,13 @@
   <tr>
     <th>Name</th>
     <th>Account</th>
+    <th>Role</th>
   </tr>
   <% for project in @projects %>
     <tr>
       <td><%= project.name %></td>
       <td><%= project.account_id %></td>
+      <td><%= project.role_for(current_user) %></td>
       <td><%= link_to "Show", account_project_path(@account, project) %></td>
       <td><%= link_to "Edit", edit_account_project_path(@account, project) %></td>
       <td><%= link_to "Destroy", account_project_path(@account, project), :confirm => 'Are you sure?', :method => :delete %></td>
@@ -16,4 +18,4 @@
   <% end %>
 </table>
 
-<p><%= link_to "New Project", new_account_project_path(@account) %></p>
+<p><%= link_to "New Project", new_account_project_url(@account.id) %></p>

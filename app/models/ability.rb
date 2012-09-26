@@ -11,6 +11,7 @@ class Ability
     #     can :read, :all
     #   end
     
+    if user.accounts.count > 0 
     
       can :read, Account do |account|
         user.member?(account)
@@ -26,13 +27,21 @@ class Ability
       end
       
       
-      
       can :manage, Project do |project|
         user.manager?(project)
       end
       
       
-      can :create, Project
+      can :create, Project 
+      
+      
+      can :manage, Issue do |issue|
+        user.manager?(issue.project)
+      end
+      
+      can :create, Issue
+      
+    end
     #
     # The first argument to `can` is the action you are giving the user permission to do.
     # If you pass :manage it will apply to every action. Other common actions here are

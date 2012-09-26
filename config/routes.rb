@@ -1,13 +1,19 @@
 Ccrm::Application.routes.draw do
-  resources :accounts do
-    resources :projects
-  end
+
 
   ActiveAdmin.routes(self)
 
   devise_for :admin_users, ActiveAdmin::Devise.config
 
   devise_for :users, :controllers => {:registrations => "registrations"}
+
+  resources :accounts do
+    resources :projects do 
+#      resources :users_projects
+      resources :issues
+    end
+  end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

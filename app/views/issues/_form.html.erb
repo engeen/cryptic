@@ -1,0 +1,48 @@
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :client_name %><br />
+    <%= f.text_field :client_name %>
+  </p>
+  
+  <p>
+    <%= f.label :source %><br />
+    <%= f.select(:source, Issue::SOURCES) %>
+  </p>
+
+  <p>
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone %>
+  </p>
+
+  <%= f.fields_for :calls do |c| %>
+    <p>
+      <%= c.label :reaction%>
+      <%= c.select(:reaction, Call::REACTIONS)%>
+    </p>
+
+    <p>
+      <%= c.label :presentation_conditions%>
+      <%= c.select(:presentation_conditions, Call::CONDITIONS)%>
+    </p>
+    
+
+    <p>
+      <%= c.label :result%>
+      <%= c.select(:result, Call::RESULTS)%>
+    </p>
+    
+    <p>
+      <%= c.label :refusal_reason%>
+      <%= c.text_field :refusal_reason %>
+    </p>
+    
+    <p>
+      <%= c.label :next_date%>
+      <%= c.text_field :next_date %>
+    </p>
+    
+
+
+  <% end %>
+  
+  <p><%= f.submit %></p>

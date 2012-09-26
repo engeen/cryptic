@@ -1,5 +1,8 @@
 <% title "New Project" %>
 
-<%= render 'form' %>
+
+<%= form_for @project, :url => account_projects_path(@account) do |f| %>
+  <%= render 'form', :f => f %>
+<% end %>
 
 <p><%= link_to "Back to List", account_projects_path(@account) %></p>

@@ -1,0 +1,5 @@
+<% collection_length = issues.count %>
+<% issues.each_with_index do |issue, index| %>
+  Number: <%= collection_length-index %><br/>
+  <%= render "issues/issue", :issue => issue %>
+<% end %>

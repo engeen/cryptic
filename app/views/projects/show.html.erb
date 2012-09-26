@@ -9,8 +9,27 @@
   <%= @project.account_id %>
 </p>
 
+
+<% unless current_user.manager?(@project)%>
+
+<%= link_to "Новая запись", new_account_project_issue_url(@account, @project,:format => :js), :remote => true%>
+
+<div id="new_record_wrapper">
+</div>
+<hr/>
+
+<div id='records_wrapper'>
+  <% collection = @project.issues.by_user(current_user).order('created_at DESC') %>
+  <%= render "issues/list", :issues => collection %>
+</div>
+
+<% end%>
+
+
 <p>
+  <% if current_user.manager?(@project)%>
   <%= link_to "Edit", edit_account_project_path(@account, @project) %> |
   <%= link_to "Destroy", account_project_path(@project), :confirm => 'Are you sure?', :method => :delete %> |
+  <% end %>
   <%= link_to "View All", account_projects_path(@account) %>
 </p>

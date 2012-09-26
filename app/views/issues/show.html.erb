@@ -1,0 +1,12 @@
+<% title "Issue" %>
+
+<p>
+  <strong>Name:</strong>
+  <%= @issue.name %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_issue_path(@issue) %> |
+  <%= link_to "Destroy", @issue, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", issues_path %>
+</p>

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  issue_id: 1
+  user_id: 1
+  reaction: MyString
+  refusal_reason: MyText
+  presentation_conditions: MyString
+  result: MyString
+  next_date: 2012-09-26 02:23:17
+
+two:
+  issue_id: 1
+  user_id: 1
+  reaction: MyString
+  refusal_reason: MyText
+  presentation_conditions: MyString
+  result: MyString
+  next_date: 2012-09-26 02:23:17

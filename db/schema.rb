@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120918132256) do
+ActiveRecord::Schema.define(:version => 20120925222317) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "account_type", :default => 1, :null => false
@@ -51,6 +51,34 @@ ActiveRecord::Schema.define(:version => 20120918132256) do
 
   add_index "admin_users", ["email"], :name => "index_admin_users_on_email", :unique => true
   add_index "admin_users", ["reset_password_token"], :name => "index_admin_users_on_reset_password_token", :unique => true
+
+  create_table "calls", :force => true do |t|
+    t.integer  "issue_id"
+    t.integer  "user_id"
+    t.string   "reaction"
+    t.text     "refusal_reason"
+    t.string   "presentation_conditions"
+    t.string   "result"
+    t.datetime "next_date"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  add_index "calls", ["issue_id", "user_id"], :name => "index_calls_on_issue_id_and_user_id"
+  add_index "calls", ["issue_id"], :name => "index_calls_on_issue_id"
+  add_index "calls", ["user_id"], :name => "index_calls_on_user_id"
+
+  create_table "issues", :force => true do |t|
+    t.integer  "project_id"
+    t.integer  "user_id"
+    t.text     "client_name"
+    t.string   "source"
+    t.string   "phone"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "issues", ["project_id", "user_id"], :name => "index_issues_on_project_id_and_user_id"
 
   create_table "projects", :force => true do |t|
     t.string   "name"

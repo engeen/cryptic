@@ -1,0 +1,6 @@
+<% title "New Issue" %>
+
+<%= form_for @issue, :url => account_project_issues_url(@account, @project) do |f| %>
+  <%= render 'form', :f=> f %>
+<% end %>
+<p><%= link_to "Back to List", account_project_issues_path(@account, @project) %></p>

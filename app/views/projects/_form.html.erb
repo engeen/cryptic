@@ -1,8 +1,37 @@
-<%= form_for @project, :url => account_projects_path(@account) do |f| %>
   <%= f.error_messages %>
   <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
-  <p><%= f.submit %></p>
-<% end %>
+  
+  
+  <%= f.fields_for :users_projects do |n|  %>
+    <p>
+      <%= n.object.user.email %>
+      <%= n.hidden_field :id %>
+      <%= n.hidden_field :user_id %>
+      <%= n.hidden_field :project_id %>
+      <%= n.label :role%>
+      <%= n.select(:role, UsersProject::ROLES) %>
+
+      <% if n.object.persisted? %>
+        <%= n.check_box :_destroy %>
+        <%= n.label :_destroy, "Destroy" %>
+      <% end %>
+
+    </p>
+  <% end %>
+  
+  <p>
+    <%# link_to "Добавить", new_account_project_users_project_url(@account, @project)%>
+  </p>
+  
+  <p>
+    <%= f.label :emails_list %>
+    <%= f.text_area :emails_list %>
+  </p>
+  
+  <p>
+  <%= f.submit%>
+  </p>
+  

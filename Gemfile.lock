@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/heycarsten/email-veracity.git
+  revision: 40511f740edbae7c75a0d28d8735847bef288512
+  specs:
+    email_veracity (0.6.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -179,6 +185,7 @@ DEPENDENCIES
   cancan
   coffee-rails (~> 3.2.1)
   devise
+  email_veracity!
   jquery-rails
   meta_search (>= 1.1.0.pre)
   mocha

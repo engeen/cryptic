@@ -11,6 +11,7 @@ gem 'oauth2'
 gem 'nifty-generators' #Just to create a basic layout
 gem "omniauth"
 gem "cancan"
+gem "email_veracity", :git => 'git://github.com/heycarsten/email-veracity.git'
 
 # Gemfile in Rails >= 3.1
   gem 'activeadmin'

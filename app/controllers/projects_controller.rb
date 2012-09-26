@@ -15,6 +15,7 @@ class ProjectsController < ApplicationController
 
   def new
     @project = Project.new
+
   end
 
   def create
@@ -23,7 +24,6 @@ class ProjectsController < ApplicationController
     
     #if I create project - I'm a manager!
     @project.users_projects.build(:user_id => current_user.id, :role => :manager)
-    
     if @project.save
       redirect_to account_project_url(@account, @project), :notice => "Successfully created project."
     else
@@ -38,7 +38,7 @@ class ProjectsController < ApplicationController
   def update
     @project = Project.find(params[:id])
     if @project.update_attributes(params[:project])
-      redirect_to @project, :notice  => "Successfully updated project."
+      redirect_to account_project_url(@account, @project), :notice  => "Successfully updated project."
     else
       render :action => 'edit'
     end

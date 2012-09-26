@@ -14,6 +14,9 @@ class User < ActiveRecord::Base
   has_many :accounts, :through => :users_accounts
   has_many :users_projects
   has_many :projects, :through => :users_projects
+
+  before_save :ensure_authentication_token
+  has_many :issues
   
   
   scope :by_role,  lambda {|user_role| joins(:users_accounts).where('users_accounts.role = ?', user_role) unless user_role.nil?}
