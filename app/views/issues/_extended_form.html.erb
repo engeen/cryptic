@@ -1,0 +1,50 @@
+<p class='source <%= "field_with_errors" unless issue.errors[:source].empty? %>'>
+  <%= f.label :source %><br />
+  <span class="field_error_message">
+    <%= issue.errors[:source].join(", ") if issue.errors[:source].present? %>
+  </span><br />
+  <%= f.select(:source, Issue::SOURCES.inject({:default => ""}){ |c,e| c[e] = e.to_s; c}, {}, 
+    { :onchange => "$(this.form).submit();",:disabled =>  issue.valid? } )%>
+</p>
+
+
+<p class='client <%= "field_with_errors" unless issue.errors[:client_name].empty? %>'>
+  <%= f.label :client_name %><br />
+  <span class="field_error_message">
+    <%= issue.errors[:client_name].join(", ") if issue.errors[:client_name].present? %>
+  </span><br />
+  <%= f.text_field :client_name, 
+    :disabled =>  (issue.errors[:phone].present? || issue.errors[:source].present? || issue.valid?),
+    :onblur => "$(this.form).submit();" %>
+</p>
+
+
+<div class='calls' >
+<%= f.fields_for :calls do |c| %>
+  <p class='reaction'>
+    <%= c.label :reaction%><br />
+    <%= c.select(:reaction, Call::REACTIONS)%>
+  </p>
+
+  <p class='result'>
+    <%= c.label :result%><br />
+    <%= c.select(:result, Call::RESULTS)%>
+  </p>
+
+
+  <p class='conditions'>
+    <%= c.label :presentation_conditions%><br />
+    <%= c.select(:presentation_conditions, Call::CONDITIONS)%>
+  </p>
+  
+  <p class='reason'>
+    <%= c.label :refusal_reason%><br />
+    <%= c.text_field :refusal_reason %>
+  </p>
+  
+  <p class='nextdate'>
+    <%= c.label :next_date%><br />
+    <%= c.text_field :next_date %>
+  </p>
+  
+<% end %>

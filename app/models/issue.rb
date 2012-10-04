@@ -1,15 +1,18 @@
-# class IssueValidator < ActiveModel::Validator
-#   # implement the method where the validation logic must reside
-#   def validate(record)
-#     # do my validations on the record and add errors if necessary
-#     record.errors[:base] << "This is some custom error message" if record.calls.
-#     record.errors[:first_name] << "This is some complex validation"
-#   end
-# end
+class IssueValidator < ActiveModel::Validator
+  # implement the method where the validation logic must reside
+  def validate(record)
+    # do my validations on the record and add errors if necessary
+    unless record.new_record?
+      record.errors[:source] << "Source should be choosed" if record.source.blank? || !Issue.source_allowed?(record.source.to_sym)
+    end
+#    record.errors[:first_name] << "This is some complex validation"
+    
+#    super(record)
+  end
+end
 
 class Issue < ActiveRecord::Base
-  # include ActiveModel::IssueValidator
- 
+  include ActiveModel::Validations 
   belongs_to :project
   belongs_to :user
   
@@ -20,12 +23,25 @@ class Issue < ActiveRecord::Base
   
   attr_accessible :client_name, :phone, :project_id, :source, :user_id, :calls_attributes
   accepts_nested_attributes_for :calls
+  before_save :ensure_call_exists
+
 
   SOURCES = [:cold, :recommendation, :retry]
 
-  validates_presence_of :project_id, :user_id
-  validates_length_of :source, :minimum => 3, :maximum => 100, :allow_blank => false
-
-  validates :phone, :presence  => true
+  validates_with IssueValidator
+  validates_presence_of :project_id, :user_id, :phone
+  validates :phone, :presence  => true,:numericality => true
+  validates :client_name, :presence => { :if => lambda {|record| !record.new_record? }}
+#  validate :calls
+  
+  def self.source_allowed?(source)
+    SOURCES.include?(source)
+  end
+  
+protected
+  def ensure_call_exists
+    calls.build if calls.length==0 && self.valid? && !self.new_record?
+  end
+  
   
 end

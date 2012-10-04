@@ -24,6 +24,6 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database:
+  database: ccrm_prod
   username:
   password:

@@ -1,1 +1,3 @@
-$('#new_record_wrapper').html("<%= escape_javascript(render(:partial => 'edit')) %>");
+<% issue ||= @issue %>
+alert("!!");
+$('#new_record_wrapper').html("<%= escape_javascript(render(:partial => 'edit', :locals => {:issue => issue})) %>");

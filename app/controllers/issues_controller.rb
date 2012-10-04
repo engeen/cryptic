@@ -24,7 +24,7 @@ class IssuesController < ApplicationController
     @issue.user = current_user
     
     
-    @existing_issues = Issue.where(:phone => @issue.phone).all
+    @existing_issues = @project.issues.where(:phone => @issue.phone).all
     logger.warn "PHONE = #{@issue.phone}"
     logger.warn "ISSUES = #{@existing_issues}"
     if @existing_issues.length > 0
@@ -33,9 +33,17 @@ class IssuesController < ApplicationController
           logger.warn "=========POINT 1==========#{@issue.errors[:phone]}"
           #но с сообщением об ошибке
           
-          render :template => 'issues/new', :formats => [:js], :handler => [:js], :locals => {:issue => @issue, :existing_issues => @existing_issues}
-          logger.warn(render_to_string(:template => 'issues/new', :formats => [:js], :handler => [:js]))
-          return
+          logger.warn "=====existing issues count: #{ @existing_issues.count}"
+          if @existing_issues.count == 1
+            @issue = @existing_issues.first
+            @issue.valid?
+            logger.warn "=========POINT 2=========="
+            render :action => 'edit'
+          else
+            logger.warn(render_to_string(:template => 'issues/new', :formats => [:js], :handler => [:js]))
+            render :action => 'new'
+          end
+          
         }
       end
     
@@ -69,7 +77,8 @@ class IssuesController < ApplicationController
   def update
     @issue = Issue.find(params[:id])
     if @issue.update_attributes(params[:issue])
-      redirect_to @issue, :notice  => "Successfully updated issue."
+      #successfully updated
+      render :action => 'edit'
     else
       render :action => 'edit'
     end
