@@ -24,12 +24,19 @@ class User < ActiveRecord::Base
   
 
   def member?(resource)
-     account_member?(resource) if resource.is_a?(Account)
-     project_member?(resource) && account_member?(resource.account) if resource.is_a?(Project)
+     if resource.is_a?(Account)
+       res = account_member?(resource) 
+       logger.warn "============????=======#{res}"
+       res
+     else
+       project_member?(resource) && account_member?(resource.account) if resource.is_a?(Project)
+      end
   end
   
   def owner?(account)
-    account_owner?(account)
+    res = account_owner?(account)
+    logger.warn "============WTH=======#{res}"
+    res
   end
   
   def manager?(project)
@@ -37,7 +44,7 @@ class User < ActiveRecord::Base
   end
   
   def account_member?(account)
-    account.users.where(:id => self.id).first
+    users_accounts.where(:account_id => account.id).first
   end
   
   def project_member?(project)
@@ -45,7 +52,7 @@ class User < ActiveRecord::Base
   end
   
   def account_owner?(account)
-    account.owners.where(:id => self.id).first
+    users_accounts.where(:account_id => account.id, :role => :owner).first
   end
   
   def project_manager?(project)

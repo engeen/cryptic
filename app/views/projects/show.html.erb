@@ -1,13 +1,4 @@
-<% title "Project" %>
-
-<p>
-  <strong>Name:</strong>
-  <%= @project.name %>
-</p>
-<p>
-  <strong>Account:</strong>
-  <%= @project.account_id %>
-</p>
+<% title @project.name %>
 
 
 <% unless current_user.manager?(@project)%>

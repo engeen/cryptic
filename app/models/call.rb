@@ -8,4 +8,10 @@ class Call < ActiveRecord::Base
   REACTIONS = [:instant_refusal, :cant_speak, :listening, :interest, :asking]
   CONDITIONS = [:complete, :partial, :none]
   RESULTS = [:meeting, :redial, :refusal, :noanswer]
+  
+  validates_presence_of :user_id
+  validates_presence_of :issue_id
+  validates :result, :presence => true
+  
+  
 end

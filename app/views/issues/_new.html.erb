@@ -1,4 +1,3 @@
-<%= form_for @issue, :url => account_project_issues_url(@account, @project), :remote => true do |f| %>
-  <%= render 'form', :f=> f %>
+<%= form_for issue, :url => account_project_issues_url(@account, @project, :format => :js), :format => :js, :remote => true, :html => {"data-type" => :js, :method => :post} do |f| %>
+  <%= render 'form', :f=> f, :issue => issue %>
 <% end %>
-<p><%= link_to "Back to List", account_project_issues_path(@account, @project) %></p>

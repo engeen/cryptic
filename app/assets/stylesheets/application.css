@@ -11,3 +11,148 @@
  *= require_self
  *= require_tree .
  */
+body {
+  background-color: #888888;
+  font-family: Verdana, Helvetica, Arial;
+  font-size: 14px;
+	margin: 0;
+	padding: 0;
+}
+
+a img {
+  border: none;
+}
+
+a {
+  color: #0000FF;
+}
+
+.clear {
+  clear: both;
+  height: 0;
+  overflow: hidden;
+}
+
+
+#head {
+	background: #0d578e;
+	box-shadow: 0px 0px 5px #000000;
+	height: 50px;
+	color: white;
+	padding-left: 10px;
+	
+}
+
+#head a {
+	line-height: 50px;
+	text-align: center;
+	color: white;
+	height: 50px;
+	width: 170px;
+	display: block;
+	
+	border-left: 1px Solid #72a0c7;
+	border-right: 1px Solid #0f3e68;
+	
+	float: left;
+}
+
+
+.field_with_errors input{
+	background-color: #FFCCCC;
+}
+
+
+
+.field_with_errors, .field_error_message {
+	color: #FF8888;
+	font-size: 10px;
+}
+
+#new_record_wrapper {
+	background: #e0e0e0;
+}
+
+#new_record_wrapper input {
+	border: 1px Solid #888;
+}
+
+#new_record_wrapper p.phone input  {
+	width: 100px;
+}
+
+#new_record_wrapper p.source select  {
+	width: 100px;
+}
+
+
+#new_record_wrapper p.conditions   {
+	overflow: hidden;
+}
+
+
+#new_record_wrapper p.phone, p.source, p.client, p.reaction, p.result, p.reason, p.conditions, p.nextdate{
+	float: left;
+	display: block;
+}
+
+
+#container {
+  width: auto;
+  margin: 0;
+	margin-left: 10px;
+	margin-right: 10px;
+  background-color: #FFF;
+  padding: 20px 40px;
+  border: solid 1px black;
+  margin-top: 20px;
+}
+
+#flash {
+	background: black;
+}
+
+#flash_notice, #flash_error, #flash_alert {
+  padding: 5px 8px;
+}
+
+
+#flash_notice {
+  color: #CFC;
+}
+
+#flash_error, #flash_alert {
+  color: #FCC;
+}
+
+.fieldWithErrors {
+  display: inline;
+}
+
+.error_messages {
+  width: 400px;
+  border: 2px solid #CF0000;
+  padding: 0px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  font-size: 12px;
+}
+
+.error_messages h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 10px;
+  font-size: 12px;
+  margin: 0;
+  background-color: #c00;
+  color: #fff;
+}
+
+.error_messages p {
+  margin: 8px 10px;
+}
+
+.error_messages ul {
+  margin: 0;
+}

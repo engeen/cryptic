@@ -1,2 +1,2 @@
-$('#records_wrapper').html("<%= escape_javascript(render('issues/list', :issues => @issues)) %>");
-$('#new_record_wrapper').html("");
+alert("!");
+$('#new_record_wrapper').html('<%= escape_javascript(render(:partial => 'new', :locals => {:issue => @issue, :existing_issues => @existing_issues})) %>');

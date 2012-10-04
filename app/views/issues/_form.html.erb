@@ -1,48 +1,58 @@
-  <%= f.error_messages %>
-  <p>
+
+  <%= issue.errors.full_messages.each do |m|%>
+    <p><%= m%></p>
+  <% end %>
+
+  <p class='phone <%= "field_with_errors" unless issue.errors[:phone].present? %>'>
+    <%= f.label :phone %> 
+    <span class="field_error_message">
+      <%= issue.errors[:phone].join(", ") if issue.errors[:phone].present? %>
+    </span><br />
+    <%= f.text_field :phone, :onblur => "$(this.form).submit();" %>
+  </p>
+
+  <p class='source'>
+    <%= f.label :source %><br />
+    <%= f.select(:source, Issue::SOURCES+["--"], :selected => "--") %>
+  </p>
+
+
+  <p class='client'>
     <%= f.label :client_name %><br />
-    <%= f.text_field :client_name %>
+    <%= f.text_field :client_name, :disabled => true %>
   </p>
   
-  <p>
-    <%= f.label :source %><br />
-    <%= f.select(:source, Issue::SOURCES) %>
-  </p>
 
-  <p>
-    <%= f.label :phone %><br />
-    <%= f.text_field :phone %>
-  </p>
-
+  <div class='calls' style='display: none'>
   <%= f.fields_for :calls do |c| %>
-    <p>
-      <%= c.label :reaction%>
+    <p class='reaction'>
+      <%= c.label :reaction%><br />
       <%= c.select(:reaction, Call::REACTIONS)%>
     </p>
 
-    <p>
-      <%= c.label :presentation_conditions%>
+    <p class='result'>
+      <%= c.label :result%><br />
+      <%= c.select(:result, Call::RESULTS)%>
+    </p>
+
+
+    <p class='conditions'>
+      <%= c.label :presentation_conditions%><br />
       <%= c.select(:presentation_conditions, Call::CONDITIONS)%>
     </p>
     
-
-    <p>
-      <%= c.label :result%>
-      <%= c.select(:result, Call::RESULTS)%>
-    </p>
-    
-    <p>
-      <%= c.label :refusal_reason%>
+    <p class='reason'>
+      <%= c.label :refusal_reason%><br />
       <%= c.text_field :refusal_reason %>
     </p>
     
-    <p>
-      <%= c.label :next_date%>
+    <p class='nextdate'>
+      <%= c.label :next_date%><br />
       <%= c.text_field :next_date %>
     </p>
     
-
-
   <% end %>
+  </div>
+  <div style='clear: both'> </div>
   
   <p><%= f.submit %></p>

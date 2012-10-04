@@ -13,14 +13,18 @@ class Ability
     
     if user.accounts.count > 0 
     
+      
+
       can :read, Account do |account|
         user.member?(account)
       end
-      
+
       
       can :manage, Account do |account|
         user.owner?(account)
       end
+      
+
 
       can :read, Project do |project|
         user.member?(project)
@@ -40,6 +44,8 @@ class Ability
       end
       
       can :create, Issue
+      can :update, Issue
+      can :read, Issue
       
     end
     #

@@ -10,15 +10,27 @@
     <%= yield(:head) %>
   </head>
   <body>
-    <div id="head"><%= current_user.email if signed_in? %>
+    <% if flash.count > 0 %>
+    <div id="flash">
+        <% flash.each do |name, msg| %>
+          <%= content_tag :div, msg, :id => "flash_#{name}" %>
+        <% end %>
+    </div>
+    <% end %>
+    
+    <div id="head">
+    
+      <% if @account %>
+        <%= link_to current_user.email, account_url(@account) if signed_in?%>
+      <% else%>
+        <%= link_to current_user.email, "#" if signed_in? %>
+      <% end %>
       <%= link_to "Выйти", destroy_user_session_path, :method => :delete if signed_in? %>
       <%= link_to "Войти", new_user_session_path unless  signed_in? %>
-
-      </div>
+      
+    </div>
+    
     <div id="container">
-      <% flash.each do |name, msg| %>
-        <%= content_tag :div, msg, :id => "flash_#{name}" %>
-      <% end %>
       <%= content_tag :h1, yield(:title) if show_title? %>
       <%= yield %>
     </div>
