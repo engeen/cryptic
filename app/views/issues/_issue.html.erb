@@ -1,10 +1,51 @@
-<p>
-  <strong>client_name:</strong>
-  <%= issue.client_name  %>
-</p>
+<div class='issue_id'>
+<%= issue.id%>&nbsp;
+</div>
 
-<p>
-  <strong>Phone:</strong>
-  <%= issue.phone  %>
-</p>
+<div class='issue_date'>
+  <%= issue.created_at.strftime("%d/%m %H:%M")%>&nbsp;
+</div>
+
+
+<div class='issue_phone'>
+  <%= issue.phone %>&nbsp;
+</div>
+
+
+<div class='issue_source'>
+  <%= I18n.t(issue.source, :scope => "issue.sources")  if issue.source %>&nbsp;
+</div>
+
+<div class='issue_client_name'>
+  <%= issue.client_name  %>&nbsp;
+</div>
+
+
+<div class='issue_call_reaction'>
+  <%= I18n.t(call.reaction, :scope => "call.reactions") if call && !call.reaction.blank? %>&nbsp;
+</div>
+
+
+<div class='issue_call_conditions'>
+  <%= I18n.t(call.presentation_conditions, :scope => "call.conditions") if call && !call.presentation_conditions.blank?  %>&nbsp;
+</div>
+
+
+<div class='issue_call_refusal_reason'>
+  <%= call.refusal_reason if call  %>&nbsp;
+</div>
+
+
+<div class='issue_call_next_date'>
+  <%= call.next_date.strftime("%d/%m %H:%M") if call && call.next_date  %>&nbsp;
+</div>
+
+
+<div class='issue_call_meeting_date'>
+  <%= call.meeting_date.strftime("%d/%m %H:%M") if call  && call.meeting_date %>&nbsp;
+</div>
+
+<div class='issue_result'>
+  <%= I18n.t(issue.result, :scope => "call.results") unless issue.result.blank? %>&nbsp;
+</div>
 

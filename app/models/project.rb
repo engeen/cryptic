@@ -10,6 +10,7 @@ class Project < ActiveRecord::Base
   attr_accessor :emails_list
   
   has_many :issues
+  has_many :calls, :through => :issues
   
   
   scope :by_user,  lambda {|user| joins(:users_projects).where('users_projects.user_id = ?', user.id) unless user.nil?}

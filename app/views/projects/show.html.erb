@@ -2,15 +2,33 @@
 
 
 <% unless current_user.manager?(@project)%>
+<p>
+  <%= link_to "Новая запись", new_account_project_issue_url(@account, @project,:format => :js), :remote => true%>
+  |
+  <%= link_to "Все записи", account_project_url(@account, @project)%>
+  |
+  <%= link_to "Фильтр по зеленым", account_project_url(@account, @project, :show => :meeting)%>
+  |
+  <%= link_to "Фильтр по синим", account_project_url(@account, @project, :show => :redial)%>
+  |
+  <%= link_to "Фильтр по красным", account_project_url(@account, @project, :show => :urgent)%>
+  |
+  <%= link_to "Фильтр по желтым", account_project_url(@account, @project, :show => :today)%>
+  |
+  <%= link_to "Фильтр по черным", account_project_url(@account, @project, :show => :refuse)%>
+  |
+  <%= link_to "Напомнить", account_project_url(@account, @project, :show => :reminders)%>
+</p>
 
-<%= link_to "Новая запись", new_account_project_issue_url(@account, @project,:format => :js), :remote => true%>
 
 <div id="new_record_wrapper">
+  <%= render "issues/new", :issue => @issue %>
 </div>
+
 <hr/>
 
 <div id='records_wrapper'>
-  <% collection = @project.issues.by_user(current_user).order('created_at DESC') %>
+  <% collection = @issues %>
   <%= render "issues/list", :issues => collection %>
 </div>
 
@@ -19,6 +37,11 @@
 
 <p>
   <% if current_user.manager?(@project)%>
+
+  <%= render "projects/stats"%>
+
+  
+  
   <%= link_to "Edit", edit_account_project_path(@account, @project) %> |
   <%= link_to "Destroy", account_project_path(@project), :confirm => 'Are you sure?', :method => :delete %> |
   <% end %>

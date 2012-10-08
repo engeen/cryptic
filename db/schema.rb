@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120925222317) do
+ActiveRecord::Schema.define(:version => 20121008145509) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "account_type", :default => 1, :null => false
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20120925222317) do
     t.datetime "next_date"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
+    t.datetime "meeting_date"
   end
 
   add_index "calls", ["issue_id", "user_id"], :name => "index_calls_on_issue_id_and_user_id"
@@ -76,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20120925222317) do
     t.string   "phone"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "result"
   end
 
   add_index "issues", ["project_id", "user_id"], :name => "index_issues_on_project_id_and_user_id"

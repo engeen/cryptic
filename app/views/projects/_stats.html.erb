@@ -1,0 +1,36 @@
+<table>
+<tr>
+  <th>
+    No
+  </th>
+  <th>
+    Показатель
+  </th>
+  <th>
+    Количество
+  </th>
+  <th>
+    Процент
+  </th>
+</tr>
+
+
+<% @stats.each.with_index do |s, index| %>
+  <tr>
+    <td>
+      <%= index+1 %>
+    </td>
+    <td>
+      <%= I18n.t(s[:title])%>
+    </td>
+    <td>
+      <%= s[:value]%>
+    </td>
+    <td>
+      <%= "#{s[:percentage]} %" unless s[:percentage].blank? %>
+    </td>
+  </tr>
+
+<% end %>
+  
+</table>

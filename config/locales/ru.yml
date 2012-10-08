@@ -1,0 +1,58 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+ru:
+  hello: "Hello world"
+  number_of_calls: "Количество звонков"
+  cold_calls: "Холодных звонков"
+  recomm_calls: "Звонков по рекомендации"
+  retry_calls: "Повторных"
+  meetings_count: "Назначенных встреч"
+  refusal_count: "Количество отказов"
+  noanswer_count: "Количество недозвонов"
+  calls_count2: "Количество 2-х звонков"
+  calls_count3: "Количество 3-х звонков"
+  instant_refusal_count: "Отказ сразу"
+  cantspeak_count: "Я не могу говорить сейчас"
+  listening_count: "Просто слушает"
+  asking_interest_count: "Интерес, вопросы"
+  overlimit_count: "Количество сверх лимитов"
+  issue:
+    sources:
+      default: "Выберите"
+      cold: "Холодный"
+      recommendation: "Рекоммендация"
+      retry: "Повторный"
+  call:
+    reactions:
+      default: "Выберите"
+      instant_refusal: "Отказ сразу"
+      cant_speak: "Не могу говорить"
+      listening: "Слушает"
+      interest: "Интересуется"
+      asking: "Спрашивает"
+    conditions:
+      default: "Выберите"
+      complete: "Полная"
+      partial: "Частично"
+      none: "Не было"
+    results:
+      default: "Выберите"
+      meeting: "Встреча"
+      redial: "Перезвон"
+      refusal: "Отказ"
+      noanswer: "Не отвечает"
+  activerecord:
+    errors:
+      models:
+        issue:
+          attributes:
+            phone:
+              blank: "Введите номер"
+              not_a_number: "Некорректный номер"
+            user_id:
+              blank: "Не указан пользователь"
+            source:
+              incorrect: "Укажите источник"
+            client_name:
+              blank: "Укажите имя"

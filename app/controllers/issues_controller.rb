@@ -72,16 +72,28 @@ class IssuesController < ApplicationController
 
   def edit
     @issue = Issue.find(params[:id])
+    @issue.calls.build() if params[:new_call]=="1"
+    @issue.valid?
   end
 
   def update
     @issue = Issue.find(params[:id])
+    params[:issue][:calls_attributes].each do |k,v|
+      params[:issue][:calls_attributes][k][:next_date] = Chronic.parse(v[:next_date]).to_s
+      params[:issue][:calls_attributes][k][:meeting_date] = Chronic.parse(v[:meeting_date]).to_s
+      logger.warn "DATETIME TRANSFORM next_date: #{params[:issue][:calls_attributes][k][:next_date]}"
+      logger.warn "DATETIME TRANSFORM meeting_date: #{params[:issue][:calls_attributes][k][:meeting_date]}"
+    end if params[:issue][:calls_attributes]
+    
     if @issue.update_attributes(params[:issue])
       #successfully updated
       render :action => 'edit'
     else
+      logger.warn "============== But the call.result in issue is #{@issue.calls.last.result if @issue.calls.last}"
       render :action => 'edit'
     end
+    logger.warn "ISSUE VALIDATION: ============== #{@issue.errors.keys.join(", ")}"
+    logger.warn "ISSUE VALIDATION: =======current meeting_date #{@issue.calls.last.meeting_date if @issue.calls.last}"
   end
 
   def destroy

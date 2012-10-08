@@ -1,2 +1,2 @@
-alert("!");
-$('#new_record_wrapper').html('<%= escape_javascript(render(:partial => 'new', :locals => {:issue => @issue, :existing_issues => @existing_issues})) %>');
+/*alert("!");*/
+$('#new_record_wrapper').html("<%= escape_javascript(render(:partial => 'new', :locals => {:issue => Issue.new()})) %>");

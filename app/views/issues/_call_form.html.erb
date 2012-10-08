@@ -1,0 +1,78 @@
+<div class='call' style='clear: left'>
+  <div class='reaction issue_call_reaction'>
+    <%= c.select(:reaction, Call::REACTIONS_SELECTION, {}, {:onchange => "$(this.form).submit();", :disabled => c.object.locked? })%>
+    <span class="field_error_message">
+      <%= c.object.errors[:reaction].join(", ") if c.object.errors[:reaction].present? %>
+    </span><br />
+  </div>
+
+
+
+  <div class='conditions issue_call_conditions' style='display: <%# c.object.conditions_needed? ? "block" : "none" %>'>
+    <% if c.object.conditions_needed? %>
+      <%= c.select(:presentation_conditions, Call::CONDITIONS_SELECTION, {}, {:onchange => "$(this.form).submit();", :disabled => c.object.locked?})%>
+      <span class="field_error_message">
+        <%= c.object.errors[:presentation_conditions].join(", ") if c.object.errors[:presentation_conditions].present? %>
+      </span><br />
+    <% end %>&nbsp;
+  </div>
+
+  <div class='reason issue_call_refusal_reason' style='display: <%# c.object.reason_needed? ? "block" : "none"%>'>
+    <% if c.object.reason_needed? %>
+    <%= c.text_field :refusal_reason, :onblur => "$(this.form).submit();", :disabled => c.object.locked? %>
+    <span class="field_error_message">
+      <%= c.object.errors[:refusal_reason].join(", ") if c.object.errors[:refusal_reason].present? %>
+    </span><br />
+    <% end %>&nbsp;
+  </div>
+
+  <div class='nextdate issue_call_next_date' style='display: <%# c.object.nextdate_needed? ? "block" : "none"%>'>
+    <% if c.object.nextdate_needed? %>
+      <%= c.text_field :next_date,  :disabled => c.object.locked? %>
+      <span class="field_error_message">
+        <%= c.object.errors[:next_date].join(", ") if c.object.errors[:next_date].present? %>
+      </span><br />
+    
+
+      <% #:onblur => "$(this.form).submit();", %>
+      <script language='javascript'>
+        $('#issue_calls_attributes_<%= index %>_next_date').datetimepicker();
+      </script>
+    <% end %>&nbsp;
+  </div>
+
+
+
+  <div class='meetingdate issue_call_meeting_date' style='display: <%# c.object.meetingdate_needed? ? "block" : "none"%>'>
+    <% if c.object.meetingdate_needed? %>
+
+
+    <%= c.text_field :meeting_date, :disabled => c.object.locked? %>
+    <span class="field_error_message">
+      <%= c.object.errors[:meeting_date].join(", ") if c.object.errors[:meeting_date].present? %>
+    </span><br />
+    <% #:onblur => "$(this.form).submit();", %>
+    <script language='javascript'>
+      $('#issue_calls_attributes_<%= index %>_meeting_date').datetimepicker();
+    </script>
+    
+    <% end %>&nbsp;
+  </div>
+
+
+  <div class='result issue_result'>
+    <%= c.select(:result, Call::RESULTS_SELECTION, {}, {:onchange => "$(this.form).submit();", :disabled => !c.object.result_needed? || c.object.locked?  })%>
+    <span class="field_error_message">
+      <%= c.object.errors[:result].join(", ") if c.object.errors[:result].present? %>
+    </span><br />
+  </div>
+
+
+
+  <% unless c.object.locked? %>
+  <div class="submit issue_actions">
+    <%= f.submit("Сохранить")%>
+  </div>
+  <% end %>
+
+</div>

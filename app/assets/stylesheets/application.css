@@ -69,7 +69,7 @@ a {
 	font-size: 10px;
 }
 
-#new_record_wrapper {
+#new_record_wrapper form{
 	background: #e0e0e0;
 }
 
@@ -77,24 +77,39 @@ a {
 	border: 1px Solid #888;
 }
 
-#new_record_wrapper p.phone input  {
-	width: 100px;
+#new_record_wrapper div.phone input  {
+	width: 90%;
 }
 
-#new_record_wrapper p.source select  {
-	width: 100px;
+#new_record_wrapper div.source select  {
+	width: 90%;
 }
 
 
-#new_record_wrapper p.conditions   {
+#new_record_wrapper div.client input  {
+	width: 90%;
+}
+
+
+
+#new_record_wrapper div.conditions   {
 	overflow: hidden;
 }
 
 
-#new_record_wrapper p.phone, p.source, p.client, p.reaction, p.result, p.reason, p.conditions, p.nextdate{
+#new_record_wrapper div.phone, div.source, div.client, div.reaction, div.result, div.reason, div.conditions, 
+div.nextdate, div.submit, div.meetingdate{
 	float: left;
 	display: block;
 }
+
+
+div.calls {
+	float: left;
+	display: block;
+	width: 50%;
+}
+
 
 
 #container {
@@ -156,3 +171,173 @@ a {
 .error_messages ul {
   margin: 0;
 }
+
+
+
+
+.issue_number, .issue_id, .issue_date, .issue_phone,.issue_source,.issue_client_name,.issue_call_reaction,.issue_call_conditions,.issue_call_refusal_reason,.issue_call_next_date,.issue_call_meeting_date,.issue_result,.issue_actions {
+	float: left;
+	width: 6%;
+	display: block;
+	overflow: hidden;
+}
+
+.issues_header {
+	font-size: 10px;
+	font-weight: bold;
+}
+
+div.call div.issue_actions {
+	width: 10%;
+}
+
+.issue_actions input {
+	width: 90%;
+}
+
+.issue_entry {
+	font-size: 11px;
+	overflow: hidden;
+	height: 16px;
+	border-bottom: 1px Solid #808080;
+}
+
+.issue_call_reaction select {
+	width: 90%;
+	
+}
+
+.issue_call_conditions select {
+	width: 90%;
+}
+
+.issue_call_refusal_reason input {
+	width: 90%;
+}
+
+.issue_call_next_date input {
+	width: 90%;
+}
+
+.issue_call_meeting_date input {
+	width: 90%;
+}
+
+.issue_result select {
+	width: 90%;
+}
+
+.issue_call_reaction {
+	width: 10%;
+}
+
+
+div.call div.issue_call_reaction {
+	width: 20%;
+}
+
+div.call div.issue_call_conditions {
+	width: 12%;
+}
+
+.issue_call_meeting_date {
+	width: 8%;
+}
+
+div.call div.issue_call_meeting_date {
+	width: 16%;
+}
+
+div.call div.issue_result {
+	width: 12%;
+}
+
+
+.issue_call_refusal_reason {
+	width: 10%;
+}
+
+div.call div.issue_call_refusal_reason {
+	width: 20%;
+}
+
+.issue_call_next_date {
+	width: 8%;
+}
+
+div.call div.issue_call_next_date {
+	width: 16%;
+}
+
+
+
+.issue_form {
+	height: auto;
+}
+
+.issue_number, .issue_id {
+	width: 3%;
+}
+
+.issue_source {
+	width: 10%;
+}
+
+.issue_date,  .issue_phone{
+	width: 10%;
+}
+
+.issue_client_name {
+	width: 12%;
+	
+}
+
+
+
+
+
+
+div.calls div.call {
+	width: 100%;
+	display: auto;
+	
+}
+
+
+.result_refusal {
+	background-color: #666666;
+	
+}
+
+
+.result_meeting {
+	background-color: #33FF33;
+}
+
+.result_redial {
+	background-color: #8888FF;
+}
+
+.result_today {
+	background-color: #FFFF88;
+}
+
+.result_urgent {
+	background-color: #FF8888;
+}
+
+
+
+.result_noanswer {
+	background-color: #8888FF;
+}
+
+
+.result_empty {
+	background-color: black;
+}
+
+
+
+
+

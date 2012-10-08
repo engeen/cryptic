@@ -1,3 +1,10 @@
+
 <%= form_for @issue, :url => account_project_issue_url(@account, @project,@issue), :remote => true, :method => :put do |f| %>
   <%= render 'form', :f=> f, :issue => @issue %>
 <% end %>
+
+<p style='font-size: 10px;color: red'>
+<% issue.errors.full_messages.each do |m|%>
+  <%= m %>;
+<% end %>
+</p>
