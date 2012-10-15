@@ -121,7 +121,7 @@ class ProjectsController < ApplicationController
         @issues = @issues.where(:result => :refusal)
       when "reminders"
         # в отчете по напоминалкам: 2 цифры - назначено и сделано
-        @issues = @issues.where(:result => :meeting).includes(:calls).where(:result => :meeting).where("calls.meeting_date > ?", Date.tomorrow).where("calls.created_at < ?", Date.today)
+        @issues = @issues.where(:result => :meeting).includes(:calls).where(:result => :meeting).where("calls.meeting_date > ?", Date.tomorrow).where("issue.created_at < ?", Date.today).having("count(calls.id) < 2")
       end
 
 

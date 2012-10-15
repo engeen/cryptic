@@ -11,7 +11,7 @@
   <div class='issue_number'>
     <%= collection_length-index %>
   </div>
-  <%= render "issues/issue", :issue => issue, :call => issue.calls.last %>
+  <%= render "issues/issue", :issue => issue, :call => issue.calls.order("created_at DESC").last %>
 </div>
 
 
