@@ -5,42 +5,69 @@ class ProjectsController < ApplicationController
   def index
     @projects = current_account.projects.by_user(current_user)
   end
+  
+  
+  def rating
+    
+    case params[:rating]
+    when "number_of_calls"
+      @data = @project.users.select("users.id as id, count(calls.id) as data_field").joins(:calls).group("users.id").order("data_field DESC").as_json
+    when "cold_calls"
+      @data = @project.users.select("users.id as id, count(issues.id) as data_field").joins(:issues).group("users.id").where("issues.source = ?", :cold).order("data_field DESC").as_json
+    when "recomm_calls"
+      @data = @project.users.select("users.id as id, count(issues.id) as data_field").joins(:issues).group("users.id").where("issues.source = ?", :recommendation).order("data_field DESC").as_json
+    when "retry_calls"
+      @data = @project.users.select("users.id as id, count(issues.id) as data_field").joins(:issues).group("users.id").where("issues.source = ?", :retry).order("data_field DESC").as_json
+    when "meetings_count"
+      @data = @project.users.select("users.id as id, count(issues.id) as data_field").joins(:issues).group("users.id").where("issues.result = ?", :meeting).order("data_field DESC").as_json
+    when "refusal_count"
+      @data = @project.users.select("users.id as id, count(issues.id) as data_field").joins(:issues).group("users.id").where("issues.result = ?", :refusal).order("data_field DESC").as_json
+    when "noanswer_count"
+      @data = @project.users.select("users.id as id, count(issues.id) as data_field").joins(:issues).group("users.id").where("issues.result = ?", :noanswer).order("data_field DESC").as_json
+#    when "calls_count2"
+#      @data = @project.users.select("users.id as id, count(issues.id) as data_field").joins(:issues).group("users.id").where("issues.result = ?", :noanswer).order("data_field DESC").as_json
+    end
+    
+  end
 
   def show
+    
     if current_user.manager?(@project)
       @stats = []
+      user_filter = params[:operator_id].to_i > 0 ?  ["user_id = ?", params[:operator_id]] : "1=1"
+      calls_user_filter = params[:operator_id].to_i > 0 ?  ["calls.user_id = ?", params[:operator_id]] : "1=1"
       
       logger.warn "DEFAULT LOCALE: #{I18n.default_locale}"
 
-      total_calls_count = @project.calls.count
+      total_calls_count = @project.calls.where(calls_user_filter).count
       stat = {:title => :number_of_calls, :value => total_calls_count, :percentage => nil}
       @stats.push(stat)
       
       if total_calls_count > 0 
-        cold_calls_count = @project.issues.by_source(:cold).count
+        cold_calls_count = @project.issues.by_source(:cold).where(user_filter).count
         stat = {:title => :cold_calls, :value => cold_calls_count, :percentage => (cold_calls_count*100 / total_calls_count) }
         @stats.push(stat)
 
-        recomm_calls_count = @project.issues.by_source(:recommendation).count
+        recomm_calls_count = @project.issues.by_source(:recommendation).where(user_filter).count
         stat = {:title => :recomm_calls, :value => recomm_calls_count, :percentage => (recomm_calls_count*100 / total_calls_count) }
         @stats.push(stat)
 
-        retry_calls_count = @project.issues.by_source(:retry).count
+        retry_calls_count = @project.issues.by_source(:retry).where(user_filter).count
         stat = {:title => :retry_calls, :value => retry_calls_count, :percentage => (retry_calls_count*100 / total_calls_count) }
         @stats.push(stat)
 
 
-        meetings_count = @project.issues.where(:result => :meeting).count
+        meetings_count = @project.issues.where(:result => :meeting).where(user_filter).count
         stat = {:title => :meetings_count, :value => meetings_count, :percentage => (meetings_count*100 / total_calls_count) }
         @stats.push(stat)
 
 
-        refusal_count = @project.issues.where(:result => :refusal).count
+        refusal_count = @project.issues.where(:result => :refusal).where(user_filter).count
         stat = {:title => :refusal_count, :value => refusal_count, :percentage => (refusal_count*100 / total_calls_count) }
         @stats.push(stat)
 
-
-        noanswer_count = @project.issues.where(:result => :noanswer).count
+        #Issues или Calls  ? Возможно имеет смысл ввести делитель total_issues_count
+        noanswer_count = @project.issues.where(:result => :noanswer).where(user_filter).count
         stat = {:title => :noanswer_count, :value => noanswer_count, :percentage => (noanswer_count*100 / total_calls_count) }
         @stats.push(stat)
 

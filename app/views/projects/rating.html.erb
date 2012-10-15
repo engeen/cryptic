@@ -1,0 +1,31 @@
+<% title "#{@project.name} - #{ I18n.t(params[:rating])}" %>
+
+
+<table>
+<tr>
+  <th>
+    No
+  </th>
+  <th>
+    Оператор
+  </th>
+  <th>
+    Количество
+  </th>
+</tr>
+
+<% @data.each_with_index do |d,index| %>
+<tr>
+  <td>
+    <%= index+1 %>
+  </td>
+  <td>
+    <%= User.find(d["id"]).email %>
+  </td>
+  <td>
+    <%= d["data_field"] %>
+    
+  </td>
+</tr>
+<% end %>  
+</table>

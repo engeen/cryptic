@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :accounts, :through => :users_accounts
   has_many :users_projects
   has_many :projects, :through => :users_projects
+  has_many :calls
 
   before_save :ensure_authentication_token
   has_many :issues

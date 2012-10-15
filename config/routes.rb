@@ -9,6 +9,9 @@ Ccrm::Application.routes.draw do
 
   resources :accounts do
     resources :projects do 
+      member do
+        get :rating
+      end
 #      resources :users_projects
       resources :issues
     end

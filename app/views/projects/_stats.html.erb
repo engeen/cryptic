@@ -1,3 +1,10 @@
+<p>
+  <%= form_tag  "",:method => :get do %>
+    <%= select_tag :operator_id,  options_from_collection_for_select( @project.users.by_role(:member), "id", "email", params[:operator_id] ), :include_blank => true%>
+    <%= submit_tag "save"%>
+  <% end %>
+</p>
+
 <table>
 <tr>
   <th>
@@ -21,7 +28,7 @@
       <%= index+1 %>
     </td>
     <td>
-      <%= I18n.t(s[:title])%>
+      <%= link_to I18n.t(s[:title]), rating_account_project_url(@account, @project, :rating => s[:title])%>
     </td>
     <td>
       <%= s[:value]%>
