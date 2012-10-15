@@ -7,15 +7,15 @@
   |
   <%= link_to "Все записи", account_project_url(@account, @project)%>
   |
-  <%= link_to "Фильтр по зеленым", account_project_url(@account, @project, :show => :meeting)%>
+  <%= link_to "Назначенные встречи", account_project_url(@account, @project, :show => :meeting)%>
   |
-  <%= link_to "Фильтр по синим", account_project_url(@account, @project, :show => :redial)%>
+  <%= link_to "Перезвонить", account_project_url(@account, @project, :show => :redial)%>
   |
-  <%= link_to "Фильтр по красным", account_project_url(@account, @project, :show => :urgent)%>
+  <%= link_to "Срочно позвонить", account_project_url(@account, @project, :show => :urgent)%>
   |
-  <%= link_to "Фильтр по желтым", account_project_url(@account, @project, :show => :today)%>
+  <%= link_to "Звонки на сегодня", account_project_url(@account, @project, :show => :today)%>
   |
-  <%= link_to "Фильтр по черным", account_project_url(@account, @project, :show => :refuse)%>
+  <%= link_to "Отказы", account_project_url(@account, @project, :show => :refuse)%>
   |
   <%= link_to "Напомнить", account_project_url(@account, @project, :show => :reminders)%>
 </p>
