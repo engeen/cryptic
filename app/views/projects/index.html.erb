@@ -2,20 +2,20 @@
 
 <table>
   <tr>
-    <th>Name</th>
-    <th>Account</th>
-    <th>Role</th>
+    <th>Название группы</th>
+    <th>Учетная запись</th>
+    <th>Роль</th>
   </tr>
   <% for project in @projects %>
     <tr>
       <td><%= project.name %></td>
       <td><%= project.account_id %></td>
       <td><%= project.role_for(current_user) %></td>
-      <td><%= link_to "Show", account_project_path(@account, project) %></td>
-      <td><%= link_to "Edit", edit_account_project_path(@account, project) %></td>
-      <td><%= link_to "Destroy", account_project_path(@account, project), :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to "Показать", account_project_path(@account, project) %></td>
+      <td><%= link_to "Правка", edit_account_project_path(@account, project) %></td>
+      <td><%= link_to "Удалить", account_project_path(@account, project), :confirm => 'Вы уверены?', :method => :delete %></td>
     </tr>
   <% end %>
 </table>
 
-<p><%= link_to "New Project", new_account_project_url(@account.id) %></p>
+<p><%= link_to "Новая группа", new_account_project_url(@account.id) %></p>

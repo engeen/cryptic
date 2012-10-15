@@ -16,7 +16,7 @@
 
       <% if n.object.persisted? %>
         <%= n.check_box :_destroy %>
-        <%= n.label :_destroy, "Destroy" %>
+        <%= n.label :_destroy, "Удалить" %>
       <% end %>
 
     </p>
@@ -27,8 +27,8 @@
   </p>
   
   <p>
-    <%= f.label :emails_list %>
-    <%= f.text_area :emails_list %>
+    <%= f.label :emails_list %><br/>
+    <%= f.text_area :emails_list, :style => "width: 400px" %>
   </p>
   
   <p>
