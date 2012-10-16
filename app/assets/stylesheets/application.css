@@ -196,10 +196,20 @@ div.call div.issue_actions {
 }
 
 .issue_entry {
+	padding-top: 3px;
 	font-size: 11px;
 	overflow: hidden;
-	height: 16px;
+	height: 20px;
 	border-bottom: 1px Solid #808080;
+}
+
+.issue_entry a.selector {
+	display: block;
+	color: black;
+}
+
+a.selector:hover {
+	background: red;
 }
 
 .issue_call_reaction select {
