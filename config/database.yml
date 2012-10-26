@@ -22,8 +22,11 @@ test:
     
     
 production:
-  adapter: postgresql
-  encoding: unicode
-  database: ccrm_prod
-  username:
-  password:
+  adapter:	postgresql
+  encoding:	unicode
+  pool:	5
+  database:	dfc9l60le3e40m
+  username:	scyaimpcqfvrmh
+  password:	-8PEGfkT5i4P1aj0e50z4xR3Kf
+  host:	ec2-107-21-99-45.compute-1.amazonaws.com
+  port:	5432
