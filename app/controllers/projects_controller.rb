@@ -106,7 +106,7 @@ class ProjectsController < ApplicationController
         stat = {:title => :calls_count3, :value => calls_count3.count, :percentage => (calls_count3.count*100 / total_calls_count) }
         @stats.push(stat)
 
-        instant_refusal_count = @project.calls.where(:reaction => :instant_refusal).group("calls.issue_id").where(calls_date_filter).where(calls_user_filter).count.count
+        instant_refusal_count = @project.calls.unscoped.where(:reaction => :instant_refusal).group("calls.issue_id").where(calls_date_filter).where(calls_user_filter).count.count
         stat = {:title => :instant_refusal_count, :value => instant_refusal_count, :percentage => (instant_refusal_count*100 / total_calls_count) }
         @stats.push(stat)
 
