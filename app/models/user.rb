@@ -28,6 +28,9 @@ class User < ActiveRecord::Base
   def display_name
     email
   end
+  
+  
+  
 
   def member?(resource)
      if resource.is_a?(Account)

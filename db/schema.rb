@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121008145509) do
+ActiveRecord::Schema.define(:version => 20121026132752) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "account_type", :default => 1, :null => false
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(:version => 20121008145509) do
     t.string   "authentication_token"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.string   "name"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
@@ -122,6 +123,7 @@ ActiveRecord::Schema.define(:version => 20121008145509) do
     t.string   "role"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "name"
   end
 
   add_index "users_accounts", ["user_id", "account_id"], :name => "index_users_accounts_on_user_id_and_account_id", :unique => true
