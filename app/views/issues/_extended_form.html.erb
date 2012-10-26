@@ -22,7 +22,7 @@
   <%= f.fields_for :calls, call do |c|%>
 <%# f.fields_for :calls, issue.calls do |c| %>
     <%= render "call_form", :f=> f,:c => c, :issue => issue, :index => index  %>
-  <%#= render "call", :f=> f,:c => c, :issue => issue unless c.object.new_record? %>
+  <%#= render "call", :f=> f,:c => c, :issue =aaa> issue unless c.object.new_record? %>
   <% end %>
 <% end %>
 </div>

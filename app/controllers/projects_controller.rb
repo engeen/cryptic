@@ -132,6 +132,10 @@ class ProjectsController < ApplicationController
 
       
     else
+
+      @show_title = false
+      
+      
       @issues = @project.issues.by_user(current_user)
       case params[:show]
       when "meeting" 
@@ -150,16 +154,51 @@ class ProjectsController < ApplicationController
         # в отчете по напоминалкам: 2 цифры - назначено и сделано
         @issues = @issues.where(:result => :meeting).includes(:calls).where(:result => :meeting).where("calls.meeting_date > ?", Date.tomorrow).where("issues.created_at < ?", Date.today).having("count(calls.id) < 2")
       end
-
-
+      
       #current_issue
       @issue = @project.issues.build
       @issue.valid?
+      
+      load_issues
     end
     
     
 
   end
+  
+  
+  def issues
+    load_issues
+    render :layout => false
+  end
+  
+  def load_issues
+    @issues = @project.issues.by_user(current_user)
+    case params[:show]
+    when "meeting" 
+      @issues = @issues.where(:result => :meeting)
+    when "redial"
+      @issues = @issues.where(:result => [:redial, :noanswer])
+    when "urgent"
+      @issues = @issues.where(:result => :redial).includes(:calls).where("calls.next_date < ?",
+        5.minutes.ago)
+    when "today"
+      @issues = @issues.where(:result => :redial).includes(:calls).where("calls.next_date >= :start_date AND calls.next_date <= :end_date",
+        {:start_date => Date.today, :end_date => Date.tomorrow})
+    when "refuse"
+      @issues = @issues.where(:result => :refusal)
+    when "reminders"
+      # в отчете по напоминалкам: 2 цифры - назначено и сделано
+      @issues = @issues.where("issues.result = ?", :meeting).includes(:calls).where("calls.result = ? ", :meeting).where("calls.meeting_date > ?", Date.tomorrow).where("issues.created_at < ?", Date.today).having("count(calls.id) < 2")
+    end
+    logger.warn("!===#{@issues.to_json}")
+    
+    @issues = @issues.paginate(:per_page => 50, :page => params[:page])
+    
+  end
+  
+  
+  
 
   def new
     @project = Project.new

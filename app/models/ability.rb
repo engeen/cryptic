@@ -26,7 +26,7 @@ class Ability
       
 
 
-      can :read, Project do |project|
+      can [:read, :issues], Project do |project|
         user.member?(project)
       end
       
@@ -36,7 +36,9 @@ class Ability
       end
       
       
-      can :create, Project 
+      can :create, Project  do |project|
+        user.owner?(project.account)
+      end
       
       
       can :manage, Issue do |issue|

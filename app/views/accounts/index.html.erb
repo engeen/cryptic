@@ -1,1 +1,4 @@
-accounts index
+<h1>Мои учетные записи</h1>
+<% @accounts.each_with_index do |a,i|%>
+  <%= render "account", :account => a %>
+<% end %>

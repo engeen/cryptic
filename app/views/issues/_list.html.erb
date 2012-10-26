@@ -1,20 +1,18 @@
 <% collection_length = issues.count %>
 
-
-<%= render "issues/header"%>
-
-<% issues.each_with_index do |issue, index| %>
-
-
-
-<div class='issue_entry <%= issue.urgent? ? "result_urgent": (issue.today? ? "result_today" : "result_#{issue.result}") %>'>
-<a href="#" class='selector'>
+<% issues.each_with_index do |iss, index| %>
+<% next if iss.id.nil? %>
+<div class='issue_entry <%= iss.urgent? ? "result_urgent": (iss.today? ? "result_today" : "result_#{iss.result}") %>'>
+  <%= link_to edit_account_project_issue_url(@account, @project, iss), :remote => true, :class => "selector"  do %>
+    
   <div class='issue_number'>
     <%= collection_length-index %>
   </div>
-  <%= render "issues/issue", :issue => issue, :call => issue.calls.order("created_at DESC").last %>
+  <%= render "issues/issue", :issue => iss, :call => iss.calls.order("calls.created_at DESC").last %>
+  
+  <% end %>
+
 </div>
-</a>
 <div class='clear: both'> </div>
 
 <% end %>

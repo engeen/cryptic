@@ -40,7 +40,10 @@ a {
 	height: 50px;
 	color: white;
 	padding-left: 10px;
-	
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
 }
 
 #head a {
@@ -57,6 +60,10 @@ a {
 	float: left;
 }
 
+
+#head a:hover {
+	background: #2d67ae;
+}
 
 .field_with_errors input, .field_with_errors select{
 	background-color: #FFCCCC;
@@ -118,9 +125,9 @@ div.calls {
 	margin-left: 10px;
 	margin-right: 10px;
   background-color: #FFF;
-  padding: 20px 40px;
+  padding: 15px 30px;
   border: solid 1px black;
-  margin-top: 20px;
+	margin-top: 60px;
 }
 
 #flash {
@@ -196,7 +203,6 @@ div.call div.issue_actions {
 }
 
 .issue_entry {
-	padding-top: 3px;
 	font-size: 11px;
 	overflow: hidden;
 	height: 20px;
@@ -204,13 +210,16 @@ div.call div.issue_actions {
 }
 
 .issue_entry a.selector {
+	padding-top: 3px;
 	display: block;
 	color: black;
+	height: 20px;
+	padding:0;
+	margin: 0;
+	margin-bottom: 2px;
 }
 
-a.selector:hover {
-	background: red;
-}
+
 
 .issue_call_reaction select {
 	width: 90%;
@@ -350,4 +359,84 @@ div.calls div.call {
 
 
 
+
+.result_refusal  a.selector:hover {
+	background-color: #888888;
+	
+}
+
+
+.result_meeting  a.selector:hover {
+	background-color: #66FF66;
+}
+
+.result_redial  a.selector:hover{
+	background-color: #a0a0FF;
+}
+
+.result_today  a.selector:hover{
+	background-color: #FFFFa0;
+}
+
+.result_urgent  a.selector:hover{
+	background-color: #FFa0a0;
+}
+
+
+
+.result_noanswer  a.selector:hover{
+	background-color: #a0a0FF;
+}
+
+
+.result_empty  a.selector:hover{
+	background-color: #444444;
+}
+
+#records_wrapper {
+	height: 350px;
+	overflow: auto;
+}
+
+#workline_ {
+	position: fixed;
+	margin-top: 55px;
+	width: auto;
+	margin-left: 50px;
+	margin-right: 50px;
+	left:0;
+	top:0;
+	right: 0;
+	background: white;
+}
+
+#dashboard {
+	
+
+}
+
+
+.account {
+	width: auto;
+	background: #ddeeFF;
+	padding: 7px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	font-size: 22px;
+}
+
+.account .no {
+	float: left;
+	width: 15%;
+}
+
+.account .name {
+	float: left;
+	width: 50%;
+}
+
+.account .role {
+	float: left;
+	width: 30%;
+}
 

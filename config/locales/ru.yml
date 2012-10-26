@@ -2,6 +2,14 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 ru:
+  account:
+    account_name: "Учетная запись"
+  stats:
+    period:
+      day: за сегодня
+      yesterday: за вчера
+      week: за неделю
+      all: за все время
   hello: "Hello world"
   number_of_calls: "Количество звонков"
   cold_calls: "Холодных звонков"
@@ -45,6 +53,25 @@ ru:
   activerecord:
     errors:
       models:
+        call:
+          attributes:
+            result:
+              blank: "Укажите результат"
+            reaction:
+              blank: "Укажите реакцию"
+            refusal_reason:
+              blank: "Укажите причину отказа"
+            presentation_conditions:
+              blank: "Была презентация?"
+            next_date:
+              blank: "Укажите дату"
+              invalid_datetime: "Недопустимая дата"
+              after: "Слишком рано"
+            meeting_date:
+              invalid_datetime: "Недопустимая дата"
+              after: "Слишком рано"
+            issue_id:
+              blank: "Новая запись"
         issue:
           attributes:
             phone:

@@ -1,19 +1,25 @@
 <p>
-  <%= form_tag  "",:method => :get do %>
+  <%= form_tag  "", :method => :get do %>
     <%= select_tag :operator_id,  options_from_collection_for_select( @project.users.by_role(:member), "id", "email", params[:operator_id] ), :include_blank => true%>
+    <%= hidden_field_tag :period, params[:period] || :all %>
     <%= submit_tag "Показать"%>
 
     |
-    <%= link_to "За сегодня", "?period=day"%>
+    <%= link_to I18n.t(:day, :scope => "stats.period").capitalize, params.merge({ :period=> :day}) %>
     |
-    <%= link_to "За вчера", "?period=yesterday"%>
+    <%= link_to I18n.t(:yesterday, :scope => "stats.period").capitalize, params.merge({ :period=> :yesterday})%>
     |
-    <%= link_to "За неделю", "?period=week"%>
+    <%= link_to I18n.t(:week, :scope => "stats.period").capitalize, params.merge({ :period=> :week})%>
     |
-    <%= link_to "За весь период", "?period=all"%>
+    <%= link_to I18n.t(:all, :scope => "stats.period").capitalize, params.merge({ :period=> :all})%>
 
   <% end %>
   
+</p>
+
+<p>
+  Показана статистика по <%=  begin "оператору #{@project.users.where(:id => params["operator_id"]).first.display_name}"; rescue Exception; " всем операторам"; end  %>
+  <%= I18n.t(params[:period], :scope => "stats.period")%>
 </p>
 
 <table>

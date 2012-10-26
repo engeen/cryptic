@@ -1,49 +1,52 @@
-<% title @project.name %>
+<% title @project.name, false %>
+
+  
+  <% unless current_user.manager?(@project)%>
+    <div id='workline'>
+      <%= content_tag :h1, yield(:title) %>
 
 
-<% unless current_user.manager?(@project)%>
-<p>
-  <%= link_to "Новая запись", new_account_project_issue_url(@account, @project,:format => :js), :remote => true%>
-  |
-  <%= link_to "Все записи", account_project_url(@account, @project)%>
-  |
-  <%= link_to "Назначенные встречи", account_project_url(@account, @project, :show => :meeting)%>
-  |
-  <%= link_to "Перезвонить", account_project_url(@account, @project, :show => :redial)%>
-  |
-  <%= link_to "Срочно позвонить", account_project_url(@account, @project, :show => :urgent)%>
-  |
-  <%= link_to "Звонки на сегодня", account_project_url(@account, @project, :show => :today)%>
-  |
-  <%= link_to "Отказы", account_project_url(@account, @project, :show => :refuse)%>
-  |
-  <%= link_to "Напомнить о встрече", account_project_url(@account, @project, :show => :reminders)%>
-</p>
+      <p>
+        <%= link_to "Новая запись", new_account_project_issue_url(@account, @project,:format => :js), :remote => true%>
+        |
+        <%= link_to "Все записи", account_project_url(@account, @project)%>
+        |
+        <%= link_to "Назначенные встречи", account_project_url(@account, @project, :show => :meeting)%>
+        |
+        <%= link_to "Перезвонить", account_project_url(@account, @project, :show => :redial)%>
+        |
+        <%= link_to "Срочно позвонить", account_project_url(@account, @project, :show => :urgent)%>
+        |
+        <%= link_to "Звонки на сегодня", account_project_url(@account, @project, :show => :today)%>
+        |
+        <%= link_to "Отказы", account_project_url(@account, @project, :show => :refuse)%>
+        |
+        <%= link_to "Напомнить о встрече", account_project_url(@account, @project, :show => :reminders)%>
+      </p>
 
 
-<div id="new_record_wrapper">
-  <%= render "issues/new", :issue => @issue %>
-</div>
+      <div id="new_record_wrapper">
+        <%= render "issues/new", :issue => @issue %>
+      </div>
+    </div>
 
-<hr/>
-
-<div id='records_wrapper'>
-  <% collection = @issues %>
-  <%= render "issues/list", :issues => collection %>
-</div>
-
-<% end%>
+    <div id='records_wrapper'>
+      <% collection = @issues %>
+      <%= render "issues/list", :issues => collection %>
+      <%= pageless(@issues.total_pages, issues_account_project_path(@account, @project), "#records_wrapper")%>
+    </div>
 
 
-<p>
-  <% if current_user.manager?(@project)%>
+  <% end%>
+
+
+<% if current_user.manager?(@project)%>
+<div id='dashboard'>
 
   <%= render "projects/stats"%>
 
-  
-  
   <%= link_to "Правка", edit_account_project_path(@account, @project) %> |
   <%= link_to "Удалить", account_project_path(@project), :confirm => 'Are you sure?', :method => :delete %> |
-  <% end %>
-  <%= link_to "Показать все", account_projects_path(@account) %>
-</p>
+  <%= link_to "К списку групп", account_projects_path(@account) %>
+</div>
+<% end %>

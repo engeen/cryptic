@@ -33,8 +33,15 @@ class Call < ActiveRecord::Base
   validates_presence_of :reaction, :unless => lambda {|record| record.result == :noanswer.to_s}
   validates_presence_of :presentation_conditions, :if => lambda{|record| [:redial.to_s, :refusal.to_s, :meeting.to_s].include?(record.result) }
 
-  validates_presence_of :meeting_date, :if => lambda {|record| record.result == :meeting.to_s }
-  validates_presence_of :next_date, :if => lambda {|record| [:redial.to_s,:noanswer.to_s].include?(record.result) }
+#  validates_presence_of :meeting_date, :if => lambda {|record| record.result == :meeting.to_s }
+#  validates_presence_of :next_date, :if => lambda {|record| [:redial.to_s,:noanswer.to_s].include?(record.result) }
+
+
+  validates_datetime :next_date, :after => lambda { 2.minutes.since }, :if => lambda {|record| [:redial.to_s,:noanswer.to_s].include?(record.result) }
+  validates_datetime :meeting_date, :after => lambda { 30.minutes.since }, :if => lambda {|record| record.result == :meeting.to_s }
+
+#  validates :next_date, :timeliness => {:on_or_before => lambda { Date.current }, :type => :date}  
+
 #  validate :meeting_date_valid_datetime
 
   # def meeting_date_valid_datetime

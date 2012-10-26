@@ -23,6 +23,11 @@ class User < ActiveRecord::Base
   scope :by_role,  lambda {|user_role| joins(:users_accounts).where('users_accounts.role = ?', user_role) unless user_role.nil?}
   scope :by_project_role,  lambda {|user_role| joins(:users_projects).where('users_projects.role = ?', user_role) unless user_role.nil?}
   
+  
+  
+  def display_name
+    email
+  end
 
   def member?(resource)
      if resource.is_a?(Account)
