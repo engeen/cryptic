@@ -13,7 +13,6 @@
       <%= n.hidden_field :project_id %>
       <%= n.label :role%>
       <%= n.select(:role, UsersProject::ROLES) %>
-      <%= n.text_field :name %>
 
       <% if n.object.persisted? %>
         <%= n.check_box :_destroy %>
