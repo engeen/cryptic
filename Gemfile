@@ -16,6 +16,7 @@ gem "chronic"
 gem 'will_paginate'
 gem 'validates_timeliness', '~> 3.0'
 
+
 # Gemfile in Rails >= 3.1
   gem 'activeadmin'
   gem 'sass-rails'
@@ -30,6 +31,7 @@ end
 
 group :production do 
   gem 'pg'
+  gem 'newrelic_rpm'
 end
 
 # Gems used only for assets and not required
