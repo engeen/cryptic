@@ -18,10 +18,10 @@ gem 'validates_timeliness', '~> 3.0'
 gem "highcharts-rails", "~> 2.3.0"
 
 # Gemfile in Rails >= 3.1
-  gem 'activeadmin'
-  gem 'sass-rails'
-  gem "meta_search",    '>= 1.1.0.pre'
-  
+gem 'activeadmin'
+gem 'sass-rails'
+gem "meta_search",    '>= 1.1.0.pre'
+
   
 group :development do 
   gem 'mysql2'
@@ -32,6 +32,8 @@ end
 group :production do 
   gem 'pg'
   gem 'newrelic_rpm'
+  gem 'memcachier'
+  gem 'dalli'
 end
 
 # Gems used only for assets and not required
