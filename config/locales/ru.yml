@@ -19,6 +19,7 @@ ru:
       all: за все время
   hello: "Hello world"
   number_of_calls: "Количество звонков"
+  total_issues_count: "Количество заявок"
   cold_calls: "Холодных звонков"
   recomm_calls: "Звонков по рекомендации"
   retry_calls: "Повторных"
@@ -62,6 +63,11 @@ ru:
     email: "Эл.почта"
     password: "Пароль"
     remember_me: "Запомнить меня"
+    name: "Имя"
+    emails_list: "Список адресов эл.почты"
+    role: "Роль"
+    password_confirmation: "Подтверждение пароля"
+    current_password: "Текущий пароль"
   activerecord:
     errors:
       models:
