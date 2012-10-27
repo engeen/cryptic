@@ -1,21 +1,7 @@
 <% title "Рабочие группы" %>
 
-<table>
-  <tr>
-    <th>Название группы</th>
-    <th>Учетная запись</th>
-    <th>Роль</th>
-  </tr>
   <% for project in @projects %>
-    <tr>
-      <td><%= project.name %></td>
-      <td><%= project.account_id %></td>
-      <td><%= project.role_for(current_user) %></td>
-      <td><%= link_to "Показать", account_project_path(@account, project) %></td>
-      <td><%= link_to "Правка", edit_account_project_path(@account, project) %></td>
-      <td><%= link_to "Удалить", account_project_path(@account, project), :confirm => 'Вы уверены?', :method => :delete %></td>
-    </tr>
+    <%= render "project", :project => project%>
   <% end %>
-</table>
 
-<p><%= link_to "Новая группа", new_account_project_url(@account.id) %></p>
+<p><%= link_to "Создать группу", new_account_project_url(@account.id) if can?(:create, @account.projects.build) %></p>

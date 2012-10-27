@@ -14,4 +14,9 @@ module ApplicationHelper
   end
   
   
+  def link_with_selection(caption, parameters = {}, selection = {})
+    link_to caption, parameters.merge(selection), :class => "#{'selected' if parameters[selection.keys.first] == selection.values.first.to_s}"
+  end
+  
+  
 end

@@ -6,22 +6,22 @@
       <%= content_tag :h1, yield(:title) %>
 
 
-      <p>
-        <%= link_to "Новая запись", new_account_project_issue_url(@account, @project,:format => :js), :remote => true%>
+      <p class='header'>
+        <%= link_to "Все записи", account_project_url(@account, @project), :class => "#{'selected' unless params[:show]}"%>
         |
-        <%= link_to "Все записи", account_project_url(@account, @project)%>
+        <%= link_with_selection "Назначенные встречи", params, {:show => :meeting}%>
         |
-        <%= link_to "Назначенные встречи", account_project_url(@account, @project, :show => :meeting)%>
+        <%= link_with_selection "Перезвонить", params, {:show => :redial} %>
         |
-        <%= link_to "Перезвонить", account_project_url(@account, @project, :show => :redial)%>
+        <%= link_with_selection "Срочно позвонить", params, {:show => :urgent}%>
         |
-        <%= link_to "Срочно позвонить", account_project_url(@account, @project, :show => :urgent)%>
+        <%= link_with_selection "Звонки на сегодня", params, {:show => :today}%>
         |
-        <%= link_to "Звонки на сегодня", account_project_url(@account, @project, :show => :today)%>
+        <%= link_with_selection "Отказы",  params, {:show => :refuse}%>
         |
-        <%= link_to "Отказы", account_project_url(@account, @project, :show => :refuse)%>
+        <%= link_with_selection "Напомнить о встрече", params, {:show => :reminders}%>
         |
-        <%= link_to "Напомнить о встрече", account_project_url(@account, @project, :show => :reminders)%>
+        <%= link_with_selection "Встречи на завтра", params, {:show => :tomorrow}%>
       </p>
 
 

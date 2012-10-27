@@ -19,6 +19,17 @@ body {
 	padding: 0;
 }
 
+body h1 {
+	font-size: 22px;
+}
+
+
+body a {
+	color: #0d578e;
+	font-size: smaller;
+	margin-bottom: 2px;
+}
+
 a img {
   border: none;
 }
@@ -34,8 +45,10 @@ a {
 }
 
 
+
+
 #head {
-	background: #0d578e;
+	background: #0d578e url(/assets/logo.png) right top no-repeat;
 	box-shadow: 0px 0px 5px #000000;
 	height: 50px;
 	color: white;
@@ -47,6 +60,7 @@ a {
 }
 
 #head a {
+	text-decoration: none;
 	line-height: 50px;
 	text-align: center;
 	color: white;
@@ -55,7 +69,6 @@ a {
 	display: block;
 	
 	border-left: 1px Solid #72a0c7;
-	border-right: 1px Solid #0f3e68;
 	
 	float: left;
 }
@@ -129,6 +142,16 @@ div.calls {
   border: solid 1px black;
 	margin-top: 60px;
 }
+
+
+#container form.new_user input,#container form.edit_user input,#container form.new_project input,#container form.edit_project input {
+	font-size: 22px;
+	padding: 5px;
+	color: #333333;
+	margin-bottom: 10px;
+	
+}
+
 
 #flash {
 	background: black;
@@ -398,6 +421,17 @@ div.calls div.call {
 	overflow: auto;
 }
 
+#workline .header a {
+	padding: 3px;
+}
+
+#workline .header a.selected {
+	background: #0d578e;
+	color: white;
+	text-decoration: none;
+	padding: 3px;
+}
+
 #workline_ {
 	position: fixed;
 	margin-top: 55px;
@@ -416,27 +450,67 @@ div.calls div.call {
 }
 
 
-.account {
+
+table.stats {
+	border-collapse: collapse;
+	width: 50%;
+	margin-bottom: 20px;
+	
+}
+
+
+table.stats th {
+	background: #0d578e;
+	padding: 5px;
+	color: white;
+	text-align: left;
+}
+
+table.stats td {
+	padding: 5px
+}
+
+table.stats tr.even td {
+	background: #e0ffe0;
+}
+
+
+
+.account, .project {
 	width: auto;
 	background: #ddeeFF;
 	padding: 7px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	font-size: 22px;
+	margin-bottom: 10px;
 }
 
-.account .no {
+.account .no,.project .no {
 	float: left;
 	width: 15%;
 }
 
-.account .name {
+.account .name, .project .name {
 	float: left;
 	width: 50%;
 }
 
-.account .role {
+.account .role, .project .role {
 	float: left;
 	width: 30%;
 }
 
+
+.project .name {
+	width: 40%;
+}
+
+.project .role {
+	width: 20%;
+}
+
+.project .actions {
+	float: left;
+	width: 20%;
+}

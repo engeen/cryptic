@@ -15,7 +15,7 @@ gem "email_veracity", :git => 'git://github.com/heycarsten/email-veracity.git'
 gem "chronic"
 gem 'will_paginate'
 gem 'validates_timeliness', '~> 3.0'
-
+gem "highcharts-rails", "~> 2.3.0"
 
 # Gemfile in Rails >= 3.1
   gem 'activeadmin'

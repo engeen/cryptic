@@ -2,8 +2,15 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 ru:
+  project:
+    roles:
+      member: "Оператор"
+      manager: "Менеджер"
   account:
     account_name: "Учетная запись"
+    roles:
+      member: "Участник"
+      owner: "Владелец"
   stats:
     period:
       day: за сегодня
@@ -25,6 +32,7 @@ ru:
   listening_count: "Просто слушает"
   asking_interest_count: "Интерес, вопросы"
   overlimit_count: "Количество сверх лимитов"
+  tomorrow_count: "Встреч на завтра"
   issue:
     sources:
       default: "Выберите"
@@ -50,6 +58,10 @@ ru:
       redial: "Перезвон"
       refusal: "Отказ"
       noanswer: "Не отвечает"
+  attributes:
+    email: "Эл.почта"
+    password: "Пароль"
+    remember_me: "Запомнить меня"
   activerecord:
     errors:
       models:

@@ -20,13 +20,21 @@
     
     <div id="head">
     
+    <% if signed_in?  %>
       <% if @account %>
-        <%= link_to current_user.email, account_url(@account) if signed_in?%>
+        <%= link_to current_user.display_name, account_url(@account)%>
       <% else%>
-        <%= link_to current_user.email, "#" if signed_in? %>
+        <%= link_to current_user.display_name, "/"%>
       <% end %>
-      <%= link_to "Выйти", destroy_user_session_path, :method => :delete if signed_in? %>
-      <%= link_to "Войти", new_user_session_path unless  signed_in? %>
+      <%= link_to "Настройки", edit_user_registration_path %>
+      <%# link_to "Настройки", edit_profile_path if current_user.profile %>
+      <%# link_to "Настройки", new_profile_path unless current_user.profile %>
+      <%= link_to "Выйти", destroy_user_session_path, :method => :delete  %>
+      
+    <% end %>
+    <%= link_to "Войти", new_user_session_path unless signed_in? %>
+      
+      
       
     </div>
     

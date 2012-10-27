@@ -1,28 +1,69 @@
-<p>
+<h1><%= @project.name %> - статистика</h1>
+<div id='workline'>
+  <div class='header'>
+  <% params[:period] ||= "all"%>
   <%= form_tag  "", :method => :get do %>
-    <%= select_tag :operator_id,  options_from_collection_for_select( @project.users.by_role(:member), "id", "email", params[:operator_id] ), :include_blank => true%>
-    <%= hidden_field_tag :period, params[:period] || :all %>
-    <%= submit_tag "Показать"%>
+    <%= select_tag :operator_id,  options_from_collection_for_select( @project.users.by_role(:member), "id", "display_name", params[:operator_id] ), :include_blank => true, :onchange => "$(this.form).submit();"%>
+    <%= hidden_field_tag :period, params[:period] %>
 
     |
-    <%= link_to I18n.t(:day, :scope => "stats.period").capitalize, params.merge({ :period=> :day}) %>
+    <%= link_with_selection I18n.t(:day, :scope => "stats.period").capitalize, params, {:period => :day} %>
     |
-    <%= link_to I18n.t(:yesterday, :scope => "stats.period").capitalize, params.merge({ :period=> :yesterday})%>
+    <%= link_with_selection I18n.t(:yesterday, :scope => "stats.period").capitalize, params, { :period=> :yesterday}%>
     |
-    <%= link_to I18n.t(:week, :scope => "stats.period").capitalize, params.merge({ :period=> :week})%>
+    <%= link_with_selection I18n.t(:week, :scope => "stats.period").capitalize, params, { :period=> :week}%>
     |
-    <%= link_to I18n.t(:all, :scope => "stats.period").capitalize, params.merge({ :period=> :all})%>
+    <%= link_with_selection I18n.t(:all, :scope => "stats.period").capitalize, params, { :period=> :all}%>
 
   <% end %>
-  
-</p>
+  </div>
+</div>
 
 <p>
   Показана статистика по <%=  begin "оператору #{@project.users.where(:id => params["operator_id"]).first.display_name}"; rescue Exception; " всем операторам"; end  %>
   <%= I18n.t(params[:period], :scope => "stats.period")%>
 </p>
 
-<table>
+<script type="text/javascript" charset='utf-8'>
+  $(function() {
+    new Highcharts.Chart({
+      chart: {
+        renderTo: "hit_rate"
+      },
+      title: {
+       text: "График активности" 
+      },
+      xAxis: { 
+        type: "datetime"
+      },
+      yAxis: {
+        title: {
+          text: "Звонков/час"
+        }
+      },
+      series: [{
+        name: "Звонки",
+        pointInterval: <%= @graph_interval * 1000 %>,
+        pointStart: <%= @graph_start.to_i * 1000 %>,
+        data: <%= @graph_data %>
+      },
+      {
+        name: "Успешные звонки",
+        pointInterval: <%= @graph_interval * 1000 %>,
+        pointStart: <%= @graph_start.to_i * 1000 %>,
+        data: <%= @graph_data1 %>
+      }      
+      ]
+      
+    });
+  });
+  
+</script>
+<div id='hit_rate' style='width: 49%; height: 450px; float: right'>
+</div>
+
+
+<table class='stats'>
 <tr>
   <th>
     No
@@ -40,7 +81,7 @@
 
 
 <% @stats.each.with_index do |s, index| %>
-  <tr>
+  <tr class='<%= 'even' if index.even? %>'>
     <td>
       <%= index+1 %>
     </td>

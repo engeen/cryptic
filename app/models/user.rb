@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
          :token_authenticatable, :omniauthable, :confirmable, :lockable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name
   # attr_accessible :title, :body
   
   has_many :users_accounts
@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 
   before_save :ensure_authentication_token
   has_many :issues
+  has_one :profile
   
   
   scope :by_role,  lambda {|user_role| joins(:users_accounts).where('users_accounts.role = ?', user_role) unless user_role.nil?}
@@ -26,7 +27,7 @@ class User < ActiveRecord::Base
   
   
   def display_name
-    email
+    name || email
   end
   
   

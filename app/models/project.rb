@@ -27,6 +27,18 @@ class Project < ActiveRecord::Base
   
   
   
+  def average_calls_count_on(time, interval,user_filter)
+    calls.where(user_filter).where("calls.created_at >= ?", Time.at(time)-interval).where("calls.created_at <= ?", Time.at(time)).count.to_f / (interval / 3600)
+  end
+
+
+  def average_success_calls_count_on(time, interval,user_filter)
+    calls.where(user_filter).where(:result => :meeting).where("calls.created_at >= ?", Time.at(time)-interval).where("calls.created_at <= ?", Time.at(time)).count.to_f / (interval / 3600)
+  end
+
+  
+  
+  
   protected
   
   def invite_members

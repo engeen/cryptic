@@ -1,0 +1,16 @@
+<div class='project'>
+  <div class='no'>
+    ID:<%= project.id%>
+  </div>
+  <div class='name'>
+    <%= link_to project.name, account_project_url(@account, project)%>
+  </div>
+  <div class='role'>
+    <%= begin I18n.t(project.role_for(current_user), :scope => "project.roles") ; rescue Exception => e; "-"; end %>
+  </div>
+  <div class='actions'>
+    <%= link_to "Правка", edit_account_project_path(@account, project) if can?(:manage, project) %>
+    <%= link_to "Удалить", account_project_path(@account, project), :confirm => 'Вы уверены?', :method => :delete if can?(:manage, project)%>
+  </div>
+  <div style='clear: both'>&nbsp;</div>
+</div>
