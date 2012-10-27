@@ -23,7 +23,7 @@ class Issue < ActiveRecord::Base
   scope :by_source,  lambda {|source| where('issues.source = ?', source) unless source.nil?}
   
   scope :reminders, lambda { includes(:calls).where("calls.meeting_date > ?", Date.tomorrow).where("calls.created_at < ?", Date.today) }
-  default_scope order("issues.created_at DESC")
+#  default_scope order("issues.created_at DESC")
   
   attr_accessible :client_name, :phone, :project_id, :source, :user_id, :calls_attributes
   accepts_nested_attributes_for :calls,:reject_if => proc {|record_attrs| !record_attrs[:id].blank? }
