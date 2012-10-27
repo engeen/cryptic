@@ -11,6 +11,9 @@ ru:
     roles:
       member: "Участник"
       owner: "Владелец"
+    types:
+      personal: "Физ.лицо"
+      company: "Юр.лицо"
   stats:
     period:
       day: за сегодня

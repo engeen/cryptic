@@ -8,6 +8,8 @@ class Account < ActiveRecord::Base
   PERSONAL = 1
   COMPANY  = 2
   
+  TYPES = { 1 => "personal", 2 => "company" }
+  
   
   def owners
     users.by_role(:owner)
