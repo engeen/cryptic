@@ -71,7 +71,14 @@ ru:
     role: "Роль"
     password_confirmation: "Подтверждение пароля"
     current_password: "Текущий пароль"
+    current_sign_in_at: "Текущий вход"
+    last_sign_in_at: "Последний вход"
+    sign_in_count: "Входил раз"
+    owner: "Владелец"
+    account_type: "Тип аккаунта"
   activerecord:
+    models:
+      user: "Пользователи"
     errors:
       models:
         call:
