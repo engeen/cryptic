@@ -10,9 +10,9 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name
   # attr_accessible :title, :body
   
-  has_many :users_accounts
+  has_many :users_accounts, :dependent => :destroy
   has_many :accounts, :through => :users_accounts
-  has_many :users_projects
+  has_many :users_projects, :dependent => :destroy
   has_many :projects, :through => :users_projects
   has_many :calls
 
@@ -30,7 +30,10 @@ class User < ActiveRecord::Base
     name || email
   end
   
-  
+  def soft_delete
+    # assuming you have deleted_at column added already
+    update_attribute(:deleted_at, Time.current)
+  end  
   
 
   def member?(resource)

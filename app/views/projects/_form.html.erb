@@ -7,11 +7,11 @@
   
   <%= f.fields_for :users_projects do |n|  %>
     <p>
-      <%= n.object.user.email %>
+      <%= n.object.user.display_name %>
       <%= n.hidden_field :id %>
       <%= n.hidden_field :user_id %>
       <%= n.hidden_field :project_id %>
-      <%= n.label :role%>
+      <%= n.label :role %>
       <%= n.select(:role, UsersProject::ROLES.map {|e| [I18n.t(e, :scope => "project.roles"), e ] }) %>
 
       <% if n.object.persisted? %>
