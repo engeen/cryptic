@@ -1,5 +1,5 @@
 <% account.users_accounts.each do |ua|%>
   <p>
-    <%= link_to ua.user.display_name, admin_user_path(ua.user) %> в роли <b><%= I18n.t(ua.role, :scope => "account.roles")%></b>
+    <%= link_to ua.user.display_name, admin_user_path(ua.user) if ua.user %> в роли <b><%= I18n.t(ua.role, :scope => "account.roles")%></b>
   </p>
 <% end %>
