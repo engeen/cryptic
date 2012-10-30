@@ -11,8 +11,9 @@ class User < ActiveRecord::Base
   # attr_accessible :title, :body
   
   has_many :users_accounts, :dependent => :destroy
-  has_many :accounts, :through => :users_accounts
   has_many :users_projects, :dependent => :destroy
+
+  has_many :accounts, :through => :users_accounts
   has_many :projects, :through => :users_projects
   has_many :calls
 
@@ -20,7 +21,7 @@ class User < ActiveRecord::Base
   has_many :issues
   has_one :profile
   
-  default_scope where("NOT deleted_at IS  ?", nil)
+#  default_scope where("NOT deleted_at IS  ?", nil)
   
   scope :by_role,  lambda {|user_role| includes(:users_accounts).where('users_accounts.role = ?', user_role) unless user_role.nil?}
   scope :by_project_role,  lambda {|user_role| includes(:users_projects).where('users_projects.role = ?', user_role) unless user_role.nil?}
