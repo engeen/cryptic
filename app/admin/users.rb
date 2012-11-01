@@ -1,9 +1,12 @@
 ActiveAdmin.register User do
-  index do                            
+  index do            
+    column :name                
     column :email                     
     column :current_sign_in_at        
     column :last_sign_in_at           
     column :sign_in_count             
+    column :confirmed_at
+    column :deleted_at
     default_actions                   
   end                                 
 

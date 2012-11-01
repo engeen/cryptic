@@ -7,6 +7,17 @@ ActiveAdmin.register Account do
     column :account_type do |a|
       I18n.t(Account::TYPES[a.account_type], :scope => "account.types")
     end
+    column :members_count do |a|
+      a.users.count
+    end
+    column :projects_count do |a|
+      a.projects.count
+    end
+    column :issues_count do |a|
+      a.issues.count
+    end
+    
+    column :created_at
     default_actions                   
   end
   

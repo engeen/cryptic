@@ -47,22 +47,17 @@ class Project < ActiveRecord::Base
     logger.warn "===> PARSING EMAILS: #{valid_emails.to_s}"
     
       valid_emails.each do |email|
-        begin
-          user = User.find_or_create_by_email(email[:email], {:password => "newuser", :password_confirmation => "newuser"})
-          logger.warn user.to_json
-          if user.valid?
-            user_account = account.users_accounts.find_or_create_by_user_id_and_role(user.id, :member)
-            logger.warn user_account.to_json
-            user_project = users_projects.find_or_create_by_user_id_and_role(:user_id => user.id, :role => :member)
-            logger.warn user_project.to_json
-          else
-            logger.warn "===> CANT CREATE USER: USER PROBABLY INVALID"
-          end
+        User.transaction do 
 
-          
-        rescue Exception => ex
-          logger.warn "===> CANT INVITE USERS_PROJECTS"
-          logger.warn ex.to_s
+          passwd = SecureRandom.hex(4)
+          user = User.find_or_create_by_email(email[:email], {:password => passwd, :password_confirmation => passwd})
+          logger.warn user.to_json
+
+          user_account = account.users_accounts.find_or_create_by_user_id_and_role(user.id, :member)
+          logger.warn user_account.to_json
+          user_project = users_projects.find_or_create_by_user_id_and_role(:user_id => user.id, :role => :member)
+          logger.warn user_project.to_json
+            
         end
         
       end

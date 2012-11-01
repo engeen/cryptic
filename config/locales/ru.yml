@@ -76,9 +76,26 @@ ru:
     sign_in_count: "Входил раз"
     owner: "Владелец"
     account_type: "Тип аккаунта"
+    members_count: "Участников"
+    projects_count: "Проектов"
+    issues_count: "Заявок"
+    created_at: "Создан"
+    account: "Аккаунт"
+    client_name: "Имя"
+    source: "Источник"
+    phone: "Телефон"
+    updated_at: "Обновлен"
+    result: "Результат"
+    confirmed_at: "Подвержден"
+    deleted_at: "Удален"
   activerecord:
     models:
       user: "Пользователи"
+      project: "Группы"
+      account: "Аккаунты"
+      issue: "Заявки"
+      call: "Звонки"
+      admin_user: "Администраторы"
     errors:
       models:
         call:

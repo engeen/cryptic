@@ -1,3 +1,10 @@
 <p><%= link_to 'Подвердите', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %>
   регистрацию на сервисе Cryptic-CRM. Это могли сделать вы сами, либо Вас добавил в проект Ваш руководитель.
-  </p>
+</p>
+<p>
+  Ваш логин: <%= @resource.email %><br/>
+  Ваш пароль: <%= @resource.password %><br/>
+</p>
+<p>
+  Вы сможете поменять пароль после подтверждения регистрации в разделе "Настройки".
+</p>
