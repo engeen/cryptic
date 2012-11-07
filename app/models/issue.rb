@@ -32,7 +32,7 @@ class Issue < ActiveRecord::Base
 
 
   SOURCES = [:cold, :recommendation, :retry]
-  SOURCES_SELECTION = SOURCES.inject({I18n.t("issue.sources.default") => ""}){ |c,e| c[I18n.t("issue.sources.#{e.to_s}")] = e.to_s; c}
+  SOURCES_SELECTION = SOURCES.inject({I18n.t("issue.sources.default") => ""}){ |c,e| c[I18n.t(e, :scope => "issue.sources")] = e.to_s; c}
 
   validates_with IssueValidator
   validates_presence_of :project_id, :user_id
