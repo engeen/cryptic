@@ -26,6 +26,7 @@ ru:
   cold_calls: "Холодных звонков"
   recomm_calls: "Звонков по рекомендации"
   retry_calls: "Повторных"
+  promo_calls: "Промо"
   meetings_count: "Назначенных встреч"
   refusal_count: "Количество отказов"
   noanswer_count: "Количество недозвонов"
@@ -43,6 +44,7 @@ ru:
       cold: "Холодный"
       recommendation: "Рекоммендация"
       retry: "Повторный"
+      promo: "Промо"
   call:
     reactions:
       default: "Выберите"

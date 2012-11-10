@@ -31,7 +31,7 @@ class Issue < ActiveRecord::Base
 
 
 
-  SOURCES = [:cold, :recommendation, :retry]
+  SOURCES = [:cold, :promo, :recommendation, :retry]
 
   validates_with IssueValidator
   validates_presence_of :project_id, :user_id

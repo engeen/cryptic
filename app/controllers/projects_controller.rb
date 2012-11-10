@@ -94,6 +94,11 @@ class ProjectsController < ApplicationController
         @stats.push(stat)
 
 
+        promo_calls_count = @project.issues.by_source(:promo).where(user_filter).where(issues_date_filter).count
+        stat = {:title => :promo_calls, :value => retry_calls_count, :percentage => (promo_calls_count*100 / total_calls_count) }
+        @stats.push(stat)
+
+
         meetings_count = @project.issues.where(:result => :meeting).where(user_filter).where(issues_date_filter).count
         stat = {:title => :meetings_count, :value => meetings_count, :percentage => (meetings_count*100 / total_calls_count) }
         @stats.push(stat)
