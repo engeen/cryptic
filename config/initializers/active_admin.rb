@@ -2,7 +2,7 @@ ActiveAdmin.setup do |config|
 
 
     config.before_filter do
-      I18n.locale = 'ru'
+      I18n.locale = :ru
     end
   # == Site Title
   #
