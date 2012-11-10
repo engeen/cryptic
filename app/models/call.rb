@@ -14,15 +14,15 @@ class Call < ActiveRecord::Base
   
   
   REACTIONS = [:instant_refusal, :cant_speak, :listening, :interest, :asking]
-  REACTIONS_SELECTION = REACTIONS.inject({I18n.t("call.reactions.default") => ""}){ |c,e| c[I18n.t(e, :scope => "call.reactions")] = e.to_s; c}
+  REACTIONS_SELECTION = REACTIONS.inject({I18n.t(:default, :scope => "call.reactions") => ""}){ |c,e| c[I18n.t(e, :scope => "call.reactions")] = e.to_s; c}
 
 
   CONDITIONS = [:complete, :partial, :none]
-  CONDITIONS_SELECTION = CONDITIONS.inject({I18n.t("call.conditions.default") => ""}){ |c,e| c[I18n.t(e, :scope => "call.conditions")] = e.to_s; c}
+  CONDITIONS_SELECTION = CONDITIONS.inject({I18n.t(:default, :scope => "call.conditions") => ""}){ |c,e| c[I18n.t(e, :scope => "call.conditions")] = e.to_s; c}
 
 
   RESULTS = [:meeting, :redial, :refusal, :noanswer]
-  RESULTS_SELECTION = RESULTS.inject({I18n.t("call.results.default") => ""}){ |c,e| c[I18n.t(e, :scope => "call.results")] = e.to_s; c}
+  RESULTS_SELECTION = RESULTS.inject({I18n.t(:default, :scope => "call.results") => ""}){ |c,e| c[I18n.t(e, :scope => "call.results")] = e.to_s; c}
 
 
   
