@@ -1,5 +1,5 @@
 <div class='source issue_source <%= "field_with_errors" unless issue.errors[:source].empty? %>'>
-  <%= f.select(:source, Issue::SOURCES_SELECTION, {}, 
+  <%= f.select(:source, translate_selection(Issue::SOURCES, "issue.sources"), {}, 
     { :onchange => "$(this.form).submit();",:disabled =>  issue.valid? } )%>
     <span class="field_error_message">
       <%= issue.errors[:source].join(", ") if issue.errors[:source].present? %>

@@ -19,4 +19,9 @@ module ApplicationHelper
   end
   
   
+  def translate_selection(sources, scop, default = :default, locale = :ru)
+    sources.inject({I18n.t(default, :scope => scop, :locale => locale) => ""}){ |c,e| c[I18n.t(e, :scope => scop, :locale => locale)] = e.to_s; c}
+  end
+  
+  
 end
