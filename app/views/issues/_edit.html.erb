@@ -1,12 +1,30 @@
 
-<%= form_for @issue, :url => account_project_issue_url(@account, @project,@issue), :remote => true, :method => :put do |f| %>
+<%= form_for @issue, :url => account_project_issue_url(@account, @project,@issue), :remote => true, :method => :put, :style => "display: true" do |f| %>
+  <div id='fields'>
   <%= render 'issues/form', :f=> f, :issue => @issue %>
+  </div>
+  <div id='wait' style='display: none; text-align: center; color: #888888; padding: 23px 0 23px 0; border-bottom: 1px Solid #666666'>
+    Секундочку...
+  </div>
 <% end %>
 
-<p style='font-size: 10px;color: red'>
-<% issue.errors.full_messages.each do |m|%>
-  <%= m %>;
+
+<script language='javascript'>
+//  $("#new_record_wrapper form").show();
+
+  $("#new_record_wrapper form").submit( function () {
+    $("#fields").hide();
+    $("#wait").show();
+    return true;
+  } );
+</script>
+
+<%#render "issues/errors", :issue => issue%>
+<%= javascript_tag do %>
+  $("#<%= params[:focus] %>").focus();
 <% end %>
-</p>
+
+
+<%#render "issues/errors", :issue => issue%>
 
 <%= render "issues/header"%>

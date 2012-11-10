@@ -173,7 +173,7 @@ class ProjectsController < ApplicationController
   end
   
   def load_issues
-    @issues = @project.issues.by_user(current_user)
+    @issues = @project.issues.by_user(current_user).order("issues.created_at DESC")
     case params[:show]
     when "meeting" 
       @issues = @issues.where(:result => :meeting)
@@ -189,7 +189,7 @@ class ProjectsController < ApplicationController
       @issues = @issues.where(:result => :refusal)
     when "reminders"
       # в отчете по напоминалкам: 2 цифры - назначено и сделано
-      @issues = @issues.where("issues.result = ?", :meeting).includes(:calls).where("calls.result = ? ", :meeting).where("calls.meeting_date > ?", Date.tomorrow).where("issues.created_at < ?", Date.today).having("count(calls.id) < 2")
+      @issues = @issues.where("issues.result = ?", :meeting).includes(:calls).where("calls.result = ? ", :meeting).where("calls.meeting_date > ?", Date.tomorrow).where("issues.created_at < ?", Date.today)
     when "tomorrow"
       @issues = @issues.where(:result => :meeting).includes(:calls).where(:result => :meeting).where("calls.meeting_date > ?", Date.tomorrow).where("calls.meeting_date < ?", Date.tomorrow.tomorrow)
     end

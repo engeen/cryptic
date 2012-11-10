@@ -3,22 +3,19 @@
     <%= render "issues/header"%>
   
     <div class='issue_entry issue_form'>
-      <div class='issue_number'>
-        <%= issue.project.issues.by_user(current_user).count+1%>
-      </div>
     
       <div class='issue_id'>
         <%= issue.id if issue.id%>&nbsp;
        </div>
 
      <div class='issue_date'>
-       <%= issue.created_at || Date.today%>&nbsp;
+       <%= (issue.created_at || Time.now).strftime("%d/%m %H:%M") %>&nbsp;
      </div>
 
       
       <div class='phone issue_phone <%= "field_with_errors" unless issue.errors[:phone].empty? %>'>
      
-        <%= f.text_field :phone, :onblur => "$(this.form).submit();", :disabled => !issue.new_record?, :class => "submit_field" %>
+        <%= f.text_field :phone,  :disabled => !issue.new_record?, :class => "submit_field" %>
         <span class="field_error_message">
           <%= issue.errors[:phone].join(", ") if issue.errors[:phone].present? %>
         </span>

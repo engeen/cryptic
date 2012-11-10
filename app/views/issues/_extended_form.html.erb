@@ -1,16 +1,17 @@
 <div class='source issue_source <%= "field_with_errors" unless issue.errors[:source].empty? %>'>
   <%= f.select(:source, translate_selection(Issue::SOURCES, "issue.sources"), {}, 
-    { :onchange => "$(this.form).submit();",:disabled =>  issue.valid? } )%>
+    { :onchange => "$('#focus').val('issue_client_name');$(this.form).submit();",:disabled =>  issue.valid? } )%>
     <span class="field_error_message">
       <%= issue.errors[:source].join(", ") if issue.errors[:source].present? %>
     </span><br />
 </div>
 
+<%= hidden_field_tag :focus, nil, {:id => "focus"}%>
 
 <div class='client issue_client_name <%= "field_with_errors" unless issue.errors[:client_name].empty? %>'>
   <%= f.text_field :client_name, 
     :disabled =>  (issue.errors[:phone].present? || issue.errors[:source].present? || issue.valid?),
-    :onblur => "$(this.form).submit();" %>
+    :onblur => "$('#focus').val('new_call');$(this.form).submit();" %>
     <span class="field_error_message">
       <%= issue.errors[:client_name].join(", ") if issue.errors[:client_name].present? %>
     </span><br />
@@ -29,6 +30,6 @@
 
 <% if [:redial.to_s, :noanswer.to_s, :meeting.to_s].include?(issue.result) || issue.result.nil? %>
   <div class="submit">
-    <%= link_to "Новый звонок", edit_account_project_issue_url(@account, @project, issue, :new_call => 1), :remote => true%>
+    <%= link_to "Новый звонок", edit_account_project_issue_url(@account, @project, issue, :new_call => 1, :focus => "issue_calls_attributes_#{issue.calls.count}_reaction"), :remote => true, :id => "new_call"%>
   </div>
 <% end %>

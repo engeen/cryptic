@@ -1,6 +1,6 @@
 <div class='call' style='clear: left'>
   <div class='reaction issue_call_reaction'>
-    <%= c.select(:reaction, Call::REACTIONS_SELECTION, {}, {:onchange => "$(this.form).submit();", :disabled => c.object.locked? })%>
+    <%= c.select(:reaction, Call::REACTIONS_SELECTION, {}, {:onchange => "result_focus();$(this.form).submit();", :disabled => c.object.locked? })%>
     <span class="field_error_message">
       <%= c.object.errors[:reaction].join(", ") if c.object.errors[:reaction].present? %>
     </span><br />
@@ -10,7 +10,7 @@
 
   <div class='conditions issue_call_conditions' style='display: <%# c.object.conditions_needed? ? "block" : "none" %>'>
     <% if c.object.conditions_needed? %>
-      <%= c.select(:presentation_conditions, Call::CONDITIONS_SELECTION, {}, {:onchange => "$(this.form).submit();", :disabled => c.object.locked?})%>
+      <%= c.select(:presentation_conditions, Call::CONDITIONS_SELECTION, {}, {:onchange => "$('#focus').val('issue_calls_attributes_#{c.object.issue.calls.count}_result');$(this.form).submit();", :disabled => c.object.locked?})%>
       <span class="field_error_message">
         <%= c.object.errors[:presentation_conditions].join(", ") if c.object.errors[:presentation_conditions].present? %>
       </span><br />
@@ -19,7 +19,7 @@
 
   <div class='reason issue_call_refusal_reason' style='display: <%# c.object.reason_needed? ? "block" : "none"%>'>
     <% if c.object.reason_needed? %>
-    <%= c.text_field :refusal_reason, :onblur => "$(this.form).submit();", :disabled => c.object.locked? %>
+    <%= c.text_field :refusal_reason,  :disabled => c.object.locked? %>
     <span class="field_error_message">
       <%= c.object.errors[:refusal_reason].join(", ") if c.object.errors[:refusal_reason].present? %>
     </span><br />
@@ -59,9 +59,35 @@
     <% end %>&nbsp;
   </div>
 
-
+  <%= javascript_tag do %>
+    function result_focus() {
+      var selected_reaction=$('#issue_calls_attributes_<%= c.object.issue.calls.count %>_reaction option:selected').val();
+      var selected_result=$('#issue_calls_attributes_<%= c.object.issue.calls.count %>_result option:selected').val();
+      if (selected_reaction=="instant_refusal") {
+        $('#focus').val("issue_calls_attributes_<%= c.object.issue.calls.count%>_refusal_reason");
+      }
+      else if (selected_reaction=="cant_speak") {
+        $('#focus').val("issue_calls_attributes_<%= c.object.issue.calls.count%>_next_date");
+      }
+      else if (selected_result=="meeting") {
+        $('#focus').val("issue_calls_attributes_<%= c.object.issue.calls.count%>_meeting_date");
+      } 
+      else if (selected_result=="redial") {
+        $('#focus').val("issue_calls_attributes_<%= c.object.issue.calls.count%>_next_date");
+      } 
+      else if (selected_result=="refusal") {
+        $('#focus').val("issue_calls_attributes_<%= c.object.issue.calls.count%>_refusal_reason");
+      } 
+      else if (selected_result=="noanswer") {
+        $('#focus').val("issue_calls_attributes_<%= c.object.issue.calls.count%>_next_date");
+      } else {
+        $('#focus').val("issue_calls_attributes_<%= c.object.issue.calls.count%>_presentation_conditions");
+      }
+      
+    }
+  <% end %>
   <div class='result issue_result'>
-    <%= c.select(:result, Call::RESULTS_SELECTION, {}, {:onchange => "$(this.form).submit();", :disabled => !c.object.result_needed? || c.object.locked?  })%>
+    <%= c.select(:result, Call::RESULTS_SELECTION, {}, {:onchange => "result_focus(); $(this.form).submit();", :disabled => !c.object.result_needed? || c.object.locked?  })%>
     <span class="field_error_message">
       <%= c.object.errors[:result].join(", ") if c.object.errors[:result].present? %>
     </span><br />
@@ -70,7 +96,7 @@
 
 
   <% unless c.object.locked? %>
-  <div class="submit issue_actions" style='width: 30px; float: right; margin-right: -10px'>
+  <div class="submit issue_actions" style='width: 30px; float: right; margin-right: -25px'>
     <%= f.submit("Ок")%>
   </div>
   <% end %>

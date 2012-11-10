@@ -5,7 +5,11 @@ class Call < ActiveRecord::Base
   attr_accessible :issue_id, :next_date, :meeting_date, :presentation_conditions, :reaction, :refusal_reason, :result, :user_id
   before_validation {|record| 
     record.result = :refusal.to_s if record.reaction==:instant_refusal.to_s
+    record.presentation_conditions = :none.to_s if record.reaction==:instant_refusal.to_s
+
     record.result = :redial.to_s if record.reaction==:cant_speak.to_s
+    record.presentation_conditions = :none.to_s if record.reaction==:cant_speak.to_s
+
     record.user = record.issue.user if record.issue
     logger.warn "============= HERE WE CHANGING VALUE============= #{record.result} ==== where the record.reaction is #{record.reaction} == : #{ record.reaction==:instant_refusal.to_s}"
     logger.warn "============= HERE WE CHANGING VALUE============= #{record.user_id} ==== where the record.issue.user is #{record.issue.user_id if record.issue} "

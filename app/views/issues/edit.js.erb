@@ -1,3 +1,12 @@
 <% issue ||= @issue %>
 /*alert("!");*/
 $('#new_record_wrapper').html("<%= escape_javascript(render(:partial => 'edit', :locals => {:issue => issue})) %>");
+
+<% if controller.action_name == "create" %>
+	$('#records_wrapper').prepend("<%= escape_javascript(render('issues/issue_wrapper', :iss => issue, :call => issue.calls.order('calls.created_at DESC').last, :collection_length => 0, :index => 0 )) %><div class='clear: both'> </div>");
+<% else %> 
+	$('#issue_<%= issue.id%>').html("<%= escape_javascript(render('issues/issue_wrapper', :iss => issue, :call => issue.calls.order('calls.created_at DESC').last, :collection_length => 0, :index => 0 )) %>");
+<% end %>
+
+
+$('#issue_<%= issue.id%>').effect("highlight", {}, 1000);

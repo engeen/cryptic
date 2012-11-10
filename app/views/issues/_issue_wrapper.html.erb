@@ -1,0 +1,8 @@
+<div id="issue_<%= iss.id %>" class='issue_entry <%= iss.urgent? ? "result_urgent": (iss.today? ? "result_today" : "result_#{iss.result}") %>'>
+  <%= link_to edit_account_project_issue_url(@account, @project, iss), :remote => true, :class => "selector"  do %>
+    
+  <%= render "issues/issue", :issue => iss, :call => call %>
+  
+  <% end %>
+
+</div>

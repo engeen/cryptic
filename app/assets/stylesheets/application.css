@@ -89,6 +89,7 @@ a {
 	font-size: 10px;
 }
 
+
 #new_record_wrapper form{
 	background: #e0e0e0;
 }
@@ -204,8 +205,6 @@ div.calls {
 }
 
 
-
-
 .issue_number, .issue_id, .issue_date, .issue_phone,.issue_source,.issue_client_name,.issue_call_reaction,.issue_call_conditions,.issue_call_refusal_reason,.issue_call_next_date,.issue_call_meeting_date,.issue_result,.issue_actions {
 	float: left;
 	width: 6%;
@@ -213,7 +212,12 @@ div.calls {
 	overflow: hidden;
 }
 
+.issue_call_conditions {
+	width: 10%;
+	
+}
 .issues_header {
+	padding-top: 10px;
 	font-size: 10px;
 	font-weight: bold;
 }
@@ -224,6 +228,11 @@ div.call div.issue_actions {
 
 .issue_actions input {
 	width: 90%;
+}
+
+.issue_form {
+	padding-bottom: 10px;
+	
 }
 
 .issue_entry {
@@ -280,15 +289,15 @@ div.call div.issue_call_reaction {
 }
 
 div.call div.issue_call_conditions {
-	width: 12%;
+	width: 20%;
 }
 
 .issue_call_meeting_date {
-	width: 8%;
+	width: 6%;
 }
 
 div.call div.issue_call_meeting_date {
-	width: 16%;
+	width: 12%;
 }
 
 div.call div.issue_result {
@@ -305,11 +314,11 @@ div.call div.issue_call_refusal_reason {
 }
 
 .issue_call_next_date {
-	width: 8%;
+	width: 6%;
 }
 
 div.call div.issue_call_next_date {
-	width: 16%;
+	width: 12%;
 }
 
 

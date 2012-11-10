@@ -53,6 +53,7 @@ class IssuesController < ApplicationController
         }
         format.js {
           @issues = @project.issues.by_user(current_user).order('created_at DESC')
+          params[:focus] = "issue_source"
           render :action => 'edit'
         }
       end

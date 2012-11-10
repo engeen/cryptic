@@ -3,10 +3,9 @@
   <%= render 'issues/form', :f=> f, :issue => issue  %>
 <% end %>
 
-<p style='font-size: 10px;color: red'>
-<% issue.errors.full_messages.each do |m|%>
-  <%= m %>;
+<%#render "issues/errors", :issue => issue%>
+<%= javascript_tag do %>
+  $("#<%= params[:focus] %>").focus();
 <% end %>
-</p>
 
 <%= render "issues/header"%>

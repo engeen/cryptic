@@ -3,10 +3,11 @@
   
   <% unless current_user.manager?(@project)%>
     <div id='workline'>
+
       <%= content_tag :h1, yield(:title) %>
 
-
       <p class='header'>
+        <%= link_to "+ Новая запись", account_project_url(@account, @project, :focus => "issue_phone"), :style => "float: right; background-color: red; color: white"%>
         <%= link_to "Все записи", account_project_url(@account, @project), :class => "#{'selected' unless params[:show]}"%>
         |
         <%= link_with_selection "Назначенные встречи", params, {:show => :meeting}%>
