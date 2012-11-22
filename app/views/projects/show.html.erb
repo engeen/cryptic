@@ -32,7 +32,7 @@
     <div id='records_wrapper'>
       <% collection = @issues %>
       <%= render "issues/list", :issues => collection %>
-      <%= pageless(@issues.total_pages, issues_account_project_path(@account, @project), "#records_wrapper")%>
+      <%= pageless(@issues.total_pages, issues_account_project_path(@account, @project, params), "#records_wrapper")%>
     </div>
 
 

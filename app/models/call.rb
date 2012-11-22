@@ -84,6 +84,7 @@ class Call < ActiveRecord::Base
   end
   
   def update_issue_result
+    issue.next_date = self.next_date if self.next_date
     issue.result = self.result 
     issue.save!
   end

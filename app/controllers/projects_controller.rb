@@ -179,24 +179,21 @@ class ProjectsController < ApplicationController
     @issues = @project.issues.by_user(current_user).order("issues.created_at DESC") unless current_user.manager?(@project)
     @issues = @project.issues.order("issues.created_at DESC") if current_user.manager?(@project)
     
-    
-    
     case params[:show]
     when "meeting" 
       @issues = @issues.where(:result => :meeting)
     when "redial"
       @issues = @issues.where(:result => [:redial, :noanswer])
     when "urgent"
-      @issues = @issues.where(:result => :redial).includes(:calls).where("calls.next_date < ?",
-        5.minutes.ago)
+      @issues = @issues.where(:result => :redial).where("next_date < ?", 5.minutes.ago)
     when "today"
-      @issues = @issues.where(:result => :redial).includes(:calls).where("calls.next_date >= :start_date AND calls.next_date <= :end_date",
+      @issues = @issues.where(:result => :redial).where("next_date >= :start_date AND next_date <= :end_date",
         {:start_date => Date.today, :end_date => Date.tomorrow})
     when "refuse"
       @issues = @issues.where(:result => :refusal)
     when "reminders"
       # в отчете по напоминалкам: 2 цифры - назначено и сделано
-      @issues = @issues.where("issues.result = ?", :meeting).includes(:calls).where("calls.result = ? ", :meeting).where("calls.meeting_date > ?", Date.tomorrow).where("issues.created_at < ?", Date.today)
+      @issues = @issues.where("issues.result = ?", :meeting).includes(:calls).where("calls.result = ? ", :meeting).where("calls.meeting_date > ? and calls.meeting_date < ?", Date.tomorrow, Date.tomorrow.tomorrow).where("issues.created_at < ?", Date.today)
     when "tomorrow"
       @issues = @issues.where(:result => :meeting).includes(:calls).where(:result => :meeting).where("calls.meeting_date > ?", Date.tomorrow).where("calls.meeting_date < ?", Date.tomorrow.tomorrow)
     end
