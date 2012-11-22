@@ -9,6 +9,7 @@
 		secondText: 'Секунды',
 		millisecText: 'Миллисекунды',
 		timezoneText: 'Часовой пояс',
+		useLocalTimezone: true,
 		currentText: 'Сейчас',
 		closeText: 'Закрыть',
 		timeFormat: 'hh:mm tt',
