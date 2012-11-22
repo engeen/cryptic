@@ -30,140 +30,143 @@ class ProjectsController < ApplicationController
     
   end
 
-  def show
+
+
+
+
+  def stats
+    @stats = []
+    user_filter = params[:operator_id].to_i > 0 ?  ["issues.user_id = ?", params[:operator_id]] : "1=1"
+    calls_user_filter = params[:operator_id].to_i > 0 ?  ["calls.user_id = ?", params[:operator_id]] : "1=1"
     
-    if current_user.manager?(@project)
-      @stats = []
-      user_filter = params[:operator_id].to_i > 0 ?  ["issues.user_id = ?", params[:operator_id]] : "1=1"
-      calls_user_filter = params[:operator_id].to_i > 0 ?  ["calls.user_id = ?", params[:operator_id]] : "1=1"
-      
-      issues_date_filter = case params[:period]
-      when "day"
-        ["issues.created_at > ?", Date.today]
-      when "yesterday"
-        ["issues.created_at > ? AND issues.created_at < ?", Date.yesterday, Date.today]
-      when "week"
-        ["issues.created_at > ? AND issues.created_at < ?", 7.days.ago, Date.today]
-      when "all"
-        "1=1"
-      else
-        "1=1"
-      end 
-
-
-      calls_date_filter = case params[:period]
-      when "day"
-        ["calls.created_at > ?", Date.today]
-      when "yesterday"
-        ["calls.created_at > ? AND calls.created_at < ?", Date.yesterday, Date.today]
-      when "week"
-        ["calls.created_at > ? AND calls.created_at < ?", 7.days.ago, Date.today]
-      when "all"
-        "1=1"
-      else
-        "1=1"
-      end 
-      
-      logger.warn "DEFAULT LOCALE: #{I18n.default_locale}"
-
-      load_graph(user_filter)
-      
-      total_calls_count = @project.calls.where(calls_user_filter).where(calls_date_filter).count
-      stat = {:title => :number_of_calls, :value => total_calls_count, :percentage => nil}
-      @stats.push(stat)
-
-
-      total_issues_count = @project.issues.where(user_filter).where(issues_date_filter).count
-      stat = {:title => :total_issues_count, :value => total_issues_count, :percentage => nil }
-      @stats.push(stat)
-
-      
-      if total_calls_count > 0 
-
-
-        cold_calls_count = @project.issues.by_source(:cold).joins(:calls).where(user_filter).where(issues_date_filter).count
-        stat = {:title => :cold_calls, :value => cold_calls_count, :percentage => (cold_calls_count*100 / total_calls_count) }
-        @stats.push(stat)
-
-        recomm_calls_count = @project.issues.by_source(:recommendation).where(user_filter).where(issues_date_filter).count
-        stat = {:title => :recomm_calls, :value => recomm_calls_count, :percentage => (recomm_calls_count*100 / total_calls_count) }
-        @stats.push(stat)
-
-        retry_calls_count = @project.issues.by_source(:retry).where(user_filter).where(issues_date_filter).count
-        stat = {:title => :retry_calls, :value => retry_calls_count, :percentage => (retry_calls_count*100 / total_calls_count) }
-        @stats.push(stat)
-
-
-        promo_calls_count = @project.issues.by_source(:promo).where(user_filter).where(issues_date_filter).count
-        stat = {:title => :promo_calls, :value => retry_calls_count, :percentage => (promo_calls_count*100 / total_calls_count) }
-        @stats.push(stat)
-
-
-        meetings_count = @project.issues.where(:result => :meeting).where(user_filter).where(issues_date_filter).count
-        stat = {:title => :meetings_count, :value => meetings_count, :percentage => (meetings_count*100 / total_calls_count) }
-        @stats.push(stat)
-
-
-        refusal_count = @project.issues.where(:result => :refusal).where(issues_date_filter).where(user_filter).count
-        stat = {:title => :refusal_count, :value => refusal_count, :percentage => (refusal_count*100 / total_calls_count) }
-        @stats.push(stat)
-
-        #Issues или Calls  ? Возможно имеет смысл ввести делитель total_issues_count
-        noanswer_count = @project.issues.where(:result => :noanswer).where(issues_date_filter).where(user_filter).count
-        stat = {:title => :noanswer_count, :value => noanswer_count, :percentage => (noanswer_count*100 / total_calls_count) }
-        @stats.push(stat)
-
-        calls_count2 = @project.issues.includes(:calls).where(:result => [:meeting, :redial]).group("issues.id").where(issues_date_filter).where(user_filter).having("count(calls.id) = ?", 2).count
-        stat = {:title => :calls_count2, :value => calls_count2.count, :percentage => (calls_count2.count*100 / total_calls_count) }
-        @stats.push(stat)
-      
-        calls_count3 = @project.issues.includes(:calls).where(:result => [:meeting, :redial]).group("issues.id").where(issues_date_filter).where(user_filter).having("count(calls.id) = ?", 3).count
-        stat = {:title => :calls_count3, :value => calls_count3.count, :percentage => (calls_count3.count*100 / total_calls_count) }
-        @stats.push(stat)
-
-        instant_refusal_count = @project.calls.where(:reaction => :instant_refusal).group("calls.issue_id").where(calls_date_filter).where(calls_user_filter).count.count
-        stat = {:title => :instant_refusal_count, :value => instant_refusal_count, :percentage => (instant_refusal_count*100 / total_calls_count) }
-        @stats.push(stat)
-
-        cantspeak_count = @project.calls.where(:reaction => :cant_speak).group("calls.issue_id").where(calls_date_filter).where(calls_user_filter).count.count
-        stat = {:title => :cantspeak_count, :value => cantspeak_count, :percentage => (cantspeak_count*100 / total_calls_count) }
-        @stats.push(stat)
-
-
-        listening_count = @project.calls.where(:reaction => :listening).group("calls.issue_id").where(calls_date_filter).where(calls_user_filter).count.count
-        stat = {:title => :listening_count, :value => listening_count, :percentage => (listening_count*100 / total_calls_count) }
-        @stats.push(stat)
-
-
-        asking_interest_count = @project.calls.where(:reaction => [:asking, :interest]).where(calls_date_filter).where(calls_user_filter).group("calls.issue_id").count.count
-        stat = {:title => :asking_interest_count, :value => asking_interest_count, :percentage => (asking_interest_count*100 / total_calls_count) }
-        @stats.push(stat)
-
-
-        overlimit_count = @project.issues.includes(:calls).where(issues_date_filter).where(user_filter).group("issues.id").having("count(calls.id) > ?", 3).count.count
-        stat = {:title => :overlimit_count, :value => overlimit_count, :percentage => (overlimit_count*100 / total_calls_count) }
-        @stats.push(stat)
-
-
-        tomorrow_count = @project.issues.includes(:calls).where(issues_date_filter).where(user_filter).where("calls.result = ?", :meeting).where("calls.meeting_date > ?", Date.tomorrow).where("calls.meeting_date < ?", Date.tomorrow.tomorrow).count
-        stat = {:title => :tomorrow_count, :value => tomorrow_count, :percentage => (tomorrow_count*100 / total_calls_count) }
-        @stats.push(stat)
-
-
-      end
-
-      
+    issues_date_filter = case params[:period]
+    when "day"
+      ["issues.created_at > ?", Date.today]
+    when "yesterday"
+      ["issues.created_at > ? AND issues.created_at < ?", Date.yesterday, Date.today]
+    when "week"
+      ["issues.created_at > ? AND issues.created_at < ?", 7.days.ago, Date.today]
+    when "all"
+      "1=1"
     else
+      "1=1"
+    end 
 
-      @show_title = false
-      @issue = @project.issues.build
-      @issue.valid?
-      
-      load_issues
+
+    calls_date_filter = case params[:period]
+    when "day"
+      ["calls.created_at > ?", Date.today]
+    when "yesterday"
+      ["calls.created_at > ? AND calls.created_at < ?", Date.yesterday, Date.today]
+    when "week"
+      ["calls.created_at > ? AND calls.created_at < ?", 7.days.ago, Date.today]
+    when "all"
+      "1=1"
+    else
+      "1=1"
+    end 
+    
+    logger.warn "DEFAULT LOCALE: #{I18n.default_locale}"
+
+    load_graph(user_filter)
+    
+    total_calls_count = @project.calls.where(calls_user_filter).where(calls_date_filter).count
+    stat = {:title => :number_of_calls, :value => total_calls_count, :percentage => nil}
+    @stats.push(stat)
+
+
+    total_issues_count = @project.issues.where(user_filter).where(issues_date_filter).count
+    stat = {:title => :total_issues_count, :value => total_issues_count, :percentage => nil }
+    @stats.push(stat)
+
+    
+    if total_calls_count > 0 
+
+
+      cold_calls_count = @project.issues.by_source(:cold).joins(:calls).where(user_filter).where(issues_date_filter).count
+      stat = {:title => :cold_calls, :value => cold_calls_count, :percentage => (cold_calls_count*100 / total_calls_count) }
+      @stats.push(stat)
+
+      recomm_calls_count = @project.issues.by_source(:recommendation).where(user_filter).where(issues_date_filter).count
+      stat = {:title => :recomm_calls, :value => recomm_calls_count, :percentage => (recomm_calls_count*100 / total_calls_count) }
+      @stats.push(stat)
+
+      retry_calls_count = @project.issues.by_source(:retry).where(user_filter).where(issues_date_filter).count
+      stat = {:title => :retry_calls, :value => retry_calls_count, :percentage => (retry_calls_count*100 / total_calls_count) }
+      @stats.push(stat)
+
+
+      promo_calls_count = @project.issues.by_source(:promo).where(user_filter).where(issues_date_filter).count
+      stat = {:title => :promo_calls, :value => retry_calls_count, :percentage => (promo_calls_count*100 / total_calls_count) }
+      @stats.push(stat)
+
+
+      meetings_count = @project.issues.where(:result => :meeting).where(user_filter).where(issues_date_filter).count
+      stat = {:title => :meetings_count, :value => meetings_count, :percentage => (meetings_count*100 / total_calls_count) }
+      @stats.push(stat)
+
+
+      refusal_count = @project.issues.where(:result => :refusal).where(issues_date_filter).where(user_filter).count
+      stat = {:title => :refusal_count, :value => refusal_count, :percentage => (refusal_count*100 / total_calls_count) }
+      @stats.push(stat)
+
+      #Issues или Calls  ? Возможно имеет смысл ввести делитель total_issues_count
+      noanswer_count = @project.issues.where(:result => :noanswer).where(issues_date_filter).where(user_filter).count
+      stat = {:title => :noanswer_count, :value => noanswer_count, :percentage => (noanswer_count*100 / total_calls_count) }
+      @stats.push(stat)
+
+      calls_count2 = @project.issues.includes(:calls).where(:result => [:meeting, :redial]).group("issues.id").where(issues_date_filter).where(user_filter).having("count(calls.id) = ?", 2).count
+      stat = {:title => :calls_count2, :value => calls_count2.count, :percentage => (calls_count2.count*100 / total_calls_count) }
+      @stats.push(stat)
+    
+      calls_count3 = @project.issues.includes(:calls).where(:result => [:meeting, :redial]).group("issues.id").where(issues_date_filter).where(user_filter).having("count(calls.id) = ?", 3).count
+      stat = {:title => :calls_count3, :value => calls_count3.count, :percentage => (calls_count3.count*100 / total_calls_count) }
+      @stats.push(stat)
+
+      instant_refusal_count = @project.calls.where(:reaction => :instant_refusal).group("calls.issue_id").where(calls_date_filter).where(calls_user_filter).count.count
+      stat = {:title => :instant_refusal_count, :value => instant_refusal_count, :percentage => (instant_refusal_count*100 / total_calls_count) }
+      @stats.push(stat)
+
+      cantspeak_count = @project.calls.where(:reaction => :cant_speak).group("calls.issue_id").where(calls_date_filter).where(calls_user_filter).count.count
+      stat = {:title => :cantspeak_count, :value => cantspeak_count, :percentage => (cantspeak_count*100 / total_calls_count) }
+      @stats.push(stat)
+
+
+      listening_count = @project.calls.where(:reaction => :listening).group("calls.issue_id").where(calls_date_filter).where(calls_user_filter).count.count
+      stat = {:title => :listening_count, :value => listening_count, :percentage => (listening_count*100 / total_calls_count) }
+      @stats.push(stat)
+
+
+      asking_interest_count = @project.calls.where(:reaction => [:asking, :interest]).where(calls_date_filter).where(calls_user_filter).group("calls.issue_id").count.count
+      stat = {:title => :asking_interest_count, :value => asking_interest_count, :percentage => (asking_interest_count*100 / total_calls_count) }
+      @stats.push(stat)
+
+
+      overlimit_count = @project.issues.includes(:calls).where(issues_date_filter).where(user_filter).group("issues.id").having("count(calls.id) > ?", 3).count.count
+      stat = {:title => :overlimit_count, :value => overlimit_count, :percentage => (overlimit_count*100 / total_calls_count) }
+      @stats.push(stat)
+
+
+      tomorrow_count = @project.issues.includes(:calls).where(issues_date_filter).where(user_filter).where("calls.result = ?", :meeting).where("calls.meeting_date > ?", Date.tomorrow).where("calls.meeting_date < ?", Date.tomorrow.tomorrow).count
+      stat = {:title => :tomorrow_count, :value => tomorrow_count, :percentage => (tomorrow_count*100 / total_calls_count) }
+      @stats.push(stat)
+
+
     end
-    
-    
 
+
+  end
+
+
+
+
+
+  def show
+    @show_title = false
+    @issue = @project.issues.build
+    @issue.valid?
+    
+    load_issues
   end
   
   
@@ -173,7 +176,11 @@ class ProjectsController < ApplicationController
   end
   
   def load_issues
-    @issues = @project.issues.by_user(current_user).order("issues.created_at DESC")
+    @issues = @project.issues.by_user(current_user).order("issues.created_at DESC") unless current_user.manager?(@project)
+    @issues = @project.issues.order("issues.created_at DESC") if current_user.manager?(@project)
+    
+    
+    
     case params[:show]
     when "meeting" 
       @issues = @issues.where(:result => :meeting)

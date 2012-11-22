@@ -1,11 +1,14 @@
+<% if !params[:show] && !current_user.manager?(@project)%>
 
-<%= form_for issue, :url => account_project_issues_url(@account, @project, :format => :js),  :remote => true, :html => { :method => :post } do |f| %>
-  <%= render 'issues/form', :f=> f, :issue => issue  %>
-<% end %>
+  <%= form_for issue, :url => account_project_issues_url(@account, @project, :format => :js),  :remote => true, :html => { :method => :post } do |f| %>
+    <%= render 'issues/form', :f=> f, :issue => issue  %>
+  <% end %>
 
-<%#render "issues/errors", :issue => issue%>
-<%= javascript_tag do %>
-  $("#<%= params[:focus] %>").focus();
+  <%#render "issues/errors", :issue => issue%>
+  <%= javascript_tag do %>
+    $("#<%= params[:focus] %>").focus();
+  <% end %>
+
 <% end %>
 
 <%= render "issues/header"%>

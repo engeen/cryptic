@@ -10,6 +10,7 @@ Ccrm::Application.routes.draw do
   resources :accounts do
     resources :projects do 
       member do
+        get :stats
         get :rating
         get :issues
       end

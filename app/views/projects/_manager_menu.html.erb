@@ -1,0 +1,11 @@
+<div style='float: right'>
+  <%= link_to "Заявки", account_project_url(@account, @project)%>
+  |
+  <%= link_to "Статистика", stats_account_project_url(@account, @project)%>
+  | 
+  <%= link_to "Правка", edit_account_project_path(@account, @project) %> 
+  |
+  <%= link_to "Удалить", account_project_path(@project), :confirm => 'Вы уверены?', :method => :delete %> 
+  |
+  <%= link_to "К списку групп", account_projects_path(@account) %>
+</div>

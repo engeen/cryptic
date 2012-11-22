@@ -4,6 +4,12 @@
   </div>
   <div class='name'>
     <%= link_to project.name, account_project_url(@account, project)%>
+    <% if current_user.manager?(project)%>
+      |
+      <%= link_to "Статистика", stats_account_project_url(@account, project)%>
+    <% end %>
+
+
   </div>
   <div class='role'>
     <%= begin I18n.t(project.role_for(current_user), :scope => "project.roles") ; rescue Exception => e; "-"; end %>

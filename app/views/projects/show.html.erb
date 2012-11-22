@@ -1,13 +1,12 @@
-<% title @project.name, false %>
+<%= render "projects/manager_menu" if current_user.manager?(@project) %>  
+<% title "#{@project.name}", false %>
 
-  
-  <% unless current_user.manager?(@project)%>
     <div id='workline'>
 
       <%= content_tag :h1, yield(:title) %>
 
       <p class='header'>
-        <%= link_to "+ Новая запись", account_project_url(@account, @project, :focus => "issue_phone"), :style => "float: right; background-color: red; color: white"%>
+        <%= link_to "+ Новая запись", account_project_url(@account, @project, :focus => "issue_phone"), :style => "float: right; background-color: red; color: white" unless current_user.manager?(@project)%>
         <%= link_to "Все записи", account_project_url(@account, @project), :class => "#{'selected' unless params[:show]}"%>
         |
         <%= link_with_selection "Назначенные встречи", params, {:show => :meeting}%>
@@ -25,9 +24,8 @@
         <%= link_with_selection "Встречи на завтра", params, {:show => :tomorrow}%>
       </p>
 
-
       <div id="new_record_wrapper">
-        <%= render "issues/new", :issue => @issue %>
+        <%= render "issues/new", :issue => @issue  %>
       </div>
     </div>
 
@@ -38,16 +36,3 @@
     </div>
 
 
-  <% end%>
-
-
-<% if current_user.manager?(@project)%>
-<div id='dashboard'>
-
-  <%= render "projects/stats"%>
-
-  <%= link_to "Правка", edit_account_project_path(@account, @project) %> |
-  <%= link_to "Удалить", account_project_path(@project), :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "К списку групп", account_projects_path(@account) %>
-</div>
-<% end %>

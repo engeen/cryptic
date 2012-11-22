@@ -40,12 +40,17 @@ class Ability
         user.owner?(project.account)
       end
       
+
       
       can :manage, Issue do |issue|
         user.manager?(issue.project)
       end
+
+      can :create, Issue do |issue|
+        !user.manager?(issue.project)
+      end
+       
       
-      can :create, Issue
       can :update, Issue
       can :read, Issue do |issue|
         #user is member of the same account as target issue belongs to

@@ -1,0 +1,8 @@
+<%= render "projects/manager_menu" if current_user.manager?(@project) %>
+<% title "#{@project.name} - статистика", false %>
+
+<div id='dashboard'>
+
+  <%= render "projects/stats"%>
+
+</div>
