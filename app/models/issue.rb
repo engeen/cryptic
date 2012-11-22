@@ -45,6 +45,13 @@ class Issue < ActiveRecord::Base
   end
   
   
+  
+  def enabled_for?(usr)
+    usr == self.user
+  end
+  
+  
+  
   def urgent?
     calls.last.next_date < 5.minutes.ago if calls.last && calls.last.next_date
   end

@@ -213,9 +213,17 @@ div.calls {
 }
 
 .issue_call_conditions {
-	width: 10%;
+	width: 10%;	
 	
 }
+
+
+.red {
+	color: red;
+}
+		
+
+
 .issues_header {
 	padding-top: 10px;
 	font-size: 10px;

@@ -23,7 +23,7 @@ class IssuesController < ApplicationController
     @issue.user = current_user
     
     
-    @existing_issues = @project.issues.where(:phone => @issue.phone).all
+    @existing_issues = @account.issues.where(:phone => @issue.phone).all
     logger.warn "PHONE = #{@issue.phone}"
     logger.warn "ISSUES = #{@existing_issues}"
     if @existing_issues.length > 0
