@@ -37,7 +37,7 @@
 
       <% #:onblur => "$(this.form).submit();", %>
       <script language='javascript'>
-        $('#issue_calls_attributes_<%= index %>_next_date').datetimepicker();
+        $('#issue_calls_attributes_<%= index %>_next_date').datetimepicker({timezone: "Moscow"});
       </script>
     <% end %>&nbsp;
   </div>
