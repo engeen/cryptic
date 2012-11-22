@@ -47,7 +47,14 @@ class Ability
       
       can :create, Issue
       can :update, Issue
-      can :read, Issue
+      can :read, Issue do |issue|
+        #user is member of the same account as target issue belongs to
+        true
+      end
+      can :take, Issue do |issue|
+        #user is member of the same account as target issue belongs to
+        true
+      end
       
     end
     #

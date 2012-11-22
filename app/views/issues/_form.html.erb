@@ -32,6 +32,7 @@
 <% if issue.user && issue.user != current_user %>
 <div class='another_owner'>
   <span class='red'>Этот номер назначен другому оператору: <%= issue.user.display_name %>, рабочая группа <%= issue.project.name %></span>
+  <%= link_to "Взять себе", take_account_project_issue_url(@account, @project, issue), :remote => true, :method => :post if issue.result == :refusal.to_s %>
 </div>
 <% end %>
 

@@ -46,6 +46,12 @@ class Issue < ActiveRecord::Base
   
   
   
+  def presentation_exists?
+     calls.pluck(:presentation_conditions).include?(:complete.to_s)
+  end
+  
+  
+  
   def enabled_for?(usr)
     usr == self.user
   end

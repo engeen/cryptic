@@ -34,8 +34,8 @@ class Call < ActiveRecord::Base
   validates_presence_of :issue_id
   validates :result, :presence => true
   validates_presence_of :refusal_reason, :if => lambda {|record| record.result == :refusal.to_s }
-  validates_presence_of :reaction, :unless => lambda {|record| record.result == :noanswer.to_s}
-  validates_presence_of :presentation_conditions, :if => lambda{|record| [:redial.to_s, :refusal.to_s, :meeting.to_s].include?(record.result) }
+  validates_presence_of :reaction, :unless => lambda {|record| record.result == :noanswer.to_s || record.issue.presentation_exists?}
+  validates_presence_of :presentation_conditions, :if => lambda{|record| [:redial.to_s, :refusal.to_s, :meeting.to_s].include?(record.result) && !record.issue.presentation_exists? }
 
 #  validates_presence_of :meeting_date, :if => lambda {|record| record.result == :meeting.to_s }
 #  validates_presence_of :next_date, :if => lambda {|record| [:redial.to_s,:noanswer.to_s].include?(record.result) }
@@ -51,6 +51,8 @@ class Call < ActiveRecord::Base
   # def meeting_date_valid_datetime
   #   errors.add(:meeting_date, 'must be a valid datetime') if ((DateTime.parse(meeting_date) rescue ArgumentError) == ArgumentError)
   # end
+
+
 
 
 

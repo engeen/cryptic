@@ -14,7 +14,12 @@ Ccrm::Application.routes.draw do
         get :issues
       end
 #      resources :users_projects
-      resources :issues
+      resources :issues do 
+        member do
+          post :take
+        end
+      end
+      
     end
   end
   

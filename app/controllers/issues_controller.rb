@@ -18,6 +18,19 @@ class IssuesController < ApplicationController
     render :locals => {:issue => @issue, :existing_issues => nil}
   end
 
+
+
+
+  def take
+    @issue = Issue.find(params[:id])
+    @issue.update_attribute(:user_id, current_user.id) if @issue.project.account == @account && @issue.result == :refusal.to_s
+    @issue.valid?
+    
+    render :action => :edit
+  end
+
+
+
   def create
     @issue = @project.issues.build(params[:issue])
     @issue.user = current_user
