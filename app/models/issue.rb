@@ -17,6 +17,7 @@ class Issue < ActiveRecord::Base
   belongs_to :user
   
   has_many :calls, :validate => true, :order => "calls.created_at ASC"
+  has_many :comments
   
   scope :by_project,  lambda {|project| where('issues.project_id = ?', project.id) unless project.nil?}
   scope :by_user,  lambda {|user| where('issues.user_id = ?', user.id) unless user.nil?}

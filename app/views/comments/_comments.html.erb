@@ -1,0 +1,27 @@
+<div class='comments' id='comments'>
+  <div id='comments_list'  style='<%= doDisplay ? "" : "display: none"%>'>
+  <% issue.comments.each do |comm| %>
+    <div class='comment'>
+      <div class='author'>
+        <span style='font-size: smaller; font-weight: normal'><%= comm.created_at.strftime("%d/%m %H:%M") %></span>
+        <b style='float: right'><%= comm.user.display_name %>:</b>
+      </div>
+      <div class='message'>
+        <%= comm.comment %>
+      </div>
+    </div>
+  <% end %>
+  </div>
+  
+  <%= form_for issue.comments.build, :url => account_project_issue_comments_url(@account, @project, issue, :format => :js),  :remote => true, :html => { :method => :post } do |f| %>
+    <% if issue.comments.count > 0%>
+      <%= issue.comments.count%> комметариев.
+      <%= link_to_function "Показать", "$('#comments_list').toggle();$('#show_comments').toggle();$('#hide_comments').toggle();", :id => "show_comments", :style => doDisplay ?  "display: none" : "" %>
+      <%= link_to_function "Скрыть", "$('#comments_list').toggle();$('#show_comments').toggle();$('#hide_comments').toggle();", :id => "hide_comments", :style =>  doDisplay ? "" : "display: none" %>
+    <% end %>
+    
+    <%= f.label :comment, "Новый комментарий" %>
+    <%= f.text_field :comment %>
+    <%= f.submit "Сохранить"%>
+  <% end %>
+</div>

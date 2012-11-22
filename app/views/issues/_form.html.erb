@@ -29,6 +29,10 @@
 
 
 </div>
+
+
+
+
 <% if issue.user && issue.user != current_user %>
 <div class='another_owner'>
   <span class='red'>Этот номер назначен другому оператору: <%= issue.user.display_name %>, рабочая группа <%= issue.project.name %></span>

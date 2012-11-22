@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121026132700) do
+ActiveRecord::Schema.define(:version => 20121122161220) do
 
   create_table "accounts", :force => true do |t|
     t.integer  "account_type", :default => 1, :null => false
@@ -69,6 +69,16 @@ ActiveRecord::Schema.define(:version => 20121026132700) do
   add_index "calls", ["issue_id"], :name => "index_calls_on_issue_id"
   add_index "calls", ["user_id"], :name => "index_calls_on_user_id"
 
+  create_table "comments", :force => true do |t|
+    t.integer  "issue_id"
+    t.integer  "user_id"
+    t.text     "comment"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "comments", ["issue_id", "user_id"], :name => "index_comments_on_issue_id_and_user_id"
+
   create_table "issues", :force => true do |t|
     t.integer  "project_id"
     t.integer  "user_id"
@@ -117,6 +127,8 @@ ActiveRecord::Schema.define(:version => 20121026132700) do
     t.string   "authentication_token"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.string   "name"
+    t.datetime "deleted_at"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

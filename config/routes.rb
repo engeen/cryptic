@@ -18,6 +18,7 @@ Ccrm::Application.routes.draw do
         member do
           post :take
         end
+        resources :comments
       end
       
     end

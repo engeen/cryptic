@@ -12,7 +12,7 @@
 <script language='javascript'>
 //  $("#new_record_wrapper form").show();
 
-  $("#new_record_wrapper form").submit( function () {
+  $("#new_record_wrapper form.edit_issue, form.new_issue").submit( function () {
     $("#fields").hide();
     $("#wait").show();
     return true;
@@ -23,6 +23,13 @@
 <%= javascript_tag do %>
   $("#<%= params[:focus] %>").focus();
 <% end %>
+
+
+
+<% unless @issue.new_record? %>
+  <%= render "comments/comments", :issue => @issue, :doDisplay => false %>
+<% end %>
+
 
 
 <%#render "issues/errors", :issue => issue%>

@@ -65,6 +65,7 @@ ru:
       refusal: "Отказ"
       noanswer: "Не отвечает"
   attributes:
+    comment: "Комментарий"
     email: "Эл.почта"
     password: "Пароль"
     remember_me: "Запомнить меня"
@@ -119,6 +120,9 @@ ru:
               after: "Слишком рано"
             issue_id:
               blank: "Новая запись"
+        comment:
+          attributes:
+            comment: "Комментарий"
         issue:
           attributes:
             phone:

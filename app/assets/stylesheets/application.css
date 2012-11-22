@@ -532,3 +532,24 @@ table.stats tr.even td {
 	float: left;
 	width: 20%;
 }
+
+
+.comments {
+	font-size: 10px;
+}
+
+.comments .comment{
+	width: 100%;
+}
+
+
+.comment .author {
+	float: left;
+	width: 23%;
+	text-align: left;
+	font-weight: bold;
+}
+
+.comment .message {
+	margin-left: 24%;
+}
