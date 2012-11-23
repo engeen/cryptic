@@ -92,8 +92,8 @@ class IssuesController < ApplicationController
   def update
     @issue = Issue.find(params[:id])
     params[:issue][:calls_attributes].each do |k,v|
-      params[:issue][:calls_attributes][k][:next_date] = Chronic.parse(v[:next_date]).to_s
-      params[:issue][:calls_attributes][k][:meeting_date] = Chronic.parse(v[:meeting_date]).to_s
+      params[:issue][:calls_attributes][k][:next_date] = Chronic.parse(v[:next_date]).in_time_zone('Moscow').to_s
+      params[:issue][:calls_attributes][k][:meeting_date] = Chronic.parse(v[:meeting_date]).in_time_zone('Moscow').to_s
       logger.warn "DATETIME TRANSFORM next_date: #{params[:issue][:calls_attributes][k][:next_date]}"
       logger.warn "DATETIME TRANSFORM meeting_date: #{params[:issue][:calls_attributes][k][:meeting_date]}"
     end if params[:issue][:calls_attributes]
