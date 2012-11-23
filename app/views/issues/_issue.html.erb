@@ -3,7 +3,7 @@
 </div>
 
 <div class='issue_date'>
-  <%= issue.created_at.strftime("%d/%m %H:%M") unless issue.created_at.nil?%>&nbsp;
+  <%= issue.created_at.in_time_zone('Moscow').strftime("%d/%m %H:%M") unless issue.created_at.nil?%>&nbsp;
 </div>
 
 
@@ -37,12 +37,12 @@
 
 
 <div class='issue_call_next_date'>
-  <%= call.next_date.strftime("%d/%m %H:%M") if call && call.next_date  %>&nbsp;
+  <%= call.next_date.in_time_zone('Moscow').strftime("%d/%m %H:%M") if call && call.next_date  %>&nbsp;
 </div>
 
 
 <div class='issue_call_meeting_date'>
-  <%= call.meeting_date.strftime("%d/%m %H:%M") if call  && call.meeting_date %>&nbsp;
+  <%= call.meeting_date.in_time_zone('Moscow').strftime("%d/%m %H:%M") if call  && call.meeting_date %>&nbsp;
 </div>
 
 <div class='issue_result'>
