@@ -12,7 +12,7 @@
 		defaultTimezone: '+0004',
 		currentText: 'Сейчас',
 		closeText: 'Закрыть',
-		timeFormat: 'hh:mm tt',
+		timeFormat: 'hh:mm tt z',
 		amNames: ['AM', 'A'],
 		pmNames: ['PM', 'P'],
 		ampm: false,
